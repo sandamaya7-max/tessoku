@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>内科レジデントの鉄則 問題集</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --teal:#00818A;--teal-l:#E0F4F5;--teal-b:#5EC0C5;
+  --red:#E24B4A;--red-l:#FCEBEB;--red-b:#F09595;
+  --green:#1D9E75;--green-l:#EAF3DE;--green-b:#97C459;--green-d:#27500A;
+  --amber:#BA7517;--amber-l:#FAEEDA;--amber-b:#EF9F27;
+  --orange:#D85A30;--orange-l:#FAECE7;
+  --bg:#F4F9F9;--surface:#fff;--surface2:#EAF4F4;
+  --border:rgba(0,0,0,.10);--border-s:rgba(0,0,0,.18);
+  --text:#1A1917;--muted:#5A6A6A;--hint:#9AADAD;
+  --r:12px;--rs:8px;
+}
+html{background:var(--bg)}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+.app-header{position:sticky;top:0;z-index:100;background:rgba(244,249,249,.93);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:.5px solid var(--border);padding:11px 16px;display:flex;align-items:center;gap:10px}
+.tl-badge{background:var(--teal);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:5px;letter-spacing:.05em;font-family:'IBM Plex Mono',monospace}
+.header-title{font-size:13px;color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.header-score{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);white-space:nowrap}
+.progress-wrap{height:3px;background:var(--surface2)}
+.progress-fill{height:100%;background:var(--teal);transition:width .5s cubic-bezier(.4,0,.2,1);width:0%}
+
+/* HOME */
+#home{padding:20px 16px 60px;max-width:520px;margin:0 auto}
+.home-hero{text-align:center;padding:20px 0 16px}
+.home-hero h1{font-size:20px;font-weight:700;margin-bottom:6px;line-height:1.4}
+.book-tag{display:inline-block;background:var(--teal-l);border:1px solid var(--teal-b);color:var(--teal);font-size:12px;padding:4px 14px;border-radius:20px;margin-top:8px;margin-bottom:4px}
+.home-hero p{font-size:13px;color:var(--muted);line-height:1.7}
+.home-tabs{display:flex;gap:5px;margin:14px 0 4px;background:var(--surface2);padding:4px;border-radius:var(--r)}
+.tab-btn{flex:1;padding:7px 4px;border:none;border-radius:var(--rs);background:transparent;font-size:12px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;color:var(--muted);transition:all .2s}
+.tab-btn.active{background:var(--surface);color:var(--text);font-weight:500;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.progress-summary{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:14px}
+.prog-ring{position:relative;width:54px;height:54px;flex-shrink:0}
+.prog-ring svg{width:54px;height:54px;transform:rotate(-90deg)}
+.prog-ring circle{fill:none;stroke-width:5}
+.prog-track{stroke:var(--surface2)}
+.prog-fill-c{stroke:var(--teal);stroke-linecap:round;transition:stroke-dashoffset .8s ease}
+.prog-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:13px;font-weight:700;font-family:'IBM Plex Mono',monospace}
+.prog-text h3{font-size:14px;font-weight:500}
+.prog-text p{font-size:12px;color:var(--muted)}
+.review-banner{background:linear-gradient(135deg,#005A62,#00818A);border-radius:var(--r);padding:13px 15px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:11px}
+.review-banner:active{opacity:.9}
+.review-icon{font-size:22px}
+.review-text h3{font-size:14px;font-weight:700;color:#fff}
+.review-text p{font-size:12px;color:rgba(255,255,255,.75);margin-top:1px}
+.review-count{background:rgba(255,255,255,.2);color:#fff;font-size:12px;font-family:'IBM Plex Mono',monospace;padding:3px 9px;border-radius:20px;margin-left:auto;white-space:nowrap}
+.section-head{font-size:11px;font-weight:700;color:var(--hint);letter-spacing:.07em;margin:14px 0 8px;font-family:'IBM Plex Mono',monospace}
+.scenario-list{display:flex;flex-direction:column;gap:7px}
+.scenario-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:12px 14px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:11px;-webkit-appearance:none;width:100%;text-align:left}
+.scenario-card:active{transform:scale(.98);background:var(--surface2)}
+.scenario-card.done{border-color:var(--teal-b);background:var(--teal-l)}
+.scenario-card.has-review{border-color:var(--amber-b)}
+.sc-icon{width:36px;height:36px;min-width:36px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:17px;background:var(--surface2)}
+.scenario-card.done .sc-icon{background:#A8DFDE}
+.sc-body{flex:1;min-width:0}
+.sc-title{font-size:13px;font-weight:500}
+.sc-meta{font-size:11px;color:var(--muted);margin-top:1px}
+.sc-tags{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
+.sc-badge{font-size:10px;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:var(--surface2);color:var(--muted)}
+.scenario-card.done .sc-badge{background:#A8DFDE;color:#004A50}
+.diff-1{background:#E6F1FB;color:#185FA5}
+.diff-2{background:var(--amber-l);color:var(--amber)}
+.diff-3{background:var(--red-l);color:var(--red)}
+.sc-arrow{color:var(--hint);font-size:16px;flex-shrink:0}
+.part-divider{background:var(--teal);color:#fff;border-radius:var(--rs);padding:8px 14px;margin-top:16px;margin-bottom:8px;font-size:12px;font-weight:700}
+
+/* SIM */
+#sim{display:none;max-width:520px;margin:0 auto}
+.sim-main{padding:20px 16px 48px}
+.screen{display:none}
+.screen.active{display:block;animation:fadeUp .25s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.step-indicator{display:flex;align-items:center;gap:5px;margin-bottom:16px}
+.step-dot{width:6px;height:6px;border-radius:50%;background:var(--border-s);transition:all .3s}
+.step-dot.done{background:var(--green)}
+.step-dot.cur{background:var(--teal);width:20px;border-radius:3px}
+.step-lbl{font-size:11px;color:var(--hint);margin-left:4px;font-family:'IBM Plex Mono',monospace}
+
+/* Patient card */
+.case-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:11px}
+.case-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.case-title{font-size:16px;font-weight:700}
+.case-meta{font-size:12px;color:var(--muted);margin-top:2px}
+.case-tag{font-size:11px;background:var(--teal-l);color:var(--teal);padding:3px 8px;border-radius:5px;font-family:'IBM Plex Mono',monospace;white-space:nowrap}
+.tessoku-box{background:var(--teal-l);border-left:3px solid var(--teal);border-radius:0 var(--rs) var(--rs) 0;padding:11px 14px;margin-bottom:11px;font-size:13px;line-height:1.8}
+.tessoku-box::before{content:'鉄則';display:block;font-size:10px;font-weight:700;color:var(--teal);letter-spacing:.06em;margin-bottom:4px;font-family:'IBM Plex Mono',monospace}
+.case-body{font-size:13px;line-height:1.8;margin-bottom:11px}
+.cc{background:var(--orange-l);border-left:3px solid var(--orange);border-radius:0 var(--rs) var(--rs) 0;padding:10px 13px;margin-bottom:11px;font-size:13px;color:#4A1B0C;line-height:1.7}
+.cc::before{content:'症例';display:block;font-size:10px;font-weight:700;color:var(--orange);letter-spacing:.06em;margin-bottom:3px;font-family:'IBM Plex Mono',monospace}
+.info-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:11px;font-size:13px;line-height:1.9}
+.card-lbl{font-size:10px;font-weight:700;color:var(--hint);letter-spacing:.08em;margin-bottom:6px;font-family:'IBM Plex Mono',monospace}
+.positive{color:var(--red);font-weight:500}
+.drug-box{background:#0C1A2E;border-radius:var(--rs);padding:11px 13px;margin:9px 0;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7EC8E3;line-height:1.9}
+.drug-box .dt{color:#A8D8F0;font-weight:500;margin-bottom:5px;font-size:11px;letter-spacing:.05em}
+.drug-box .di{color:#C8EAF8}
+.drug-box .dw{color:#F7C948;font-size:11px;margin-top:3px}
+.drug-box .dn{color:#6B8F9E;font-size:11px;margin-top:2px}
+.info-note{background:var(--teal-l);border:.5px solid var(--teal-b);border-radius:var(--rs);padding:10px 13px;margin-bottom:11px;font-size:13px;line-height:1.7;color:#003A40}
+.info-note .card-lbl{color:var(--teal)}
+.sec-lbl{font-size:13px;font-weight:700;margin:16px 0 9px;padding-left:9px;border-left:3px solid var(--teal)}
+.multi-hint{font-size:12px;color:var(--hint);margin-bottom:8px}
+.choices{display:flex;flex-direction:column;gap:6px}
+.choice-btn{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rs);padding:11px 12px;text-align:left;font-size:13px;cursor:pointer;width:100%;color:var(--text);font-family:'Noto Sans JP',sans-serif;transition:all .15s;display:flex;align-items:flex-start;gap:9px;-webkit-appearance:none}
+.choice-btn:active{transform:scale(.98)}
+.choice-letter{width:24px;height:24px;min-width:24px;border-radius:50%;border:1.5px solid var(--border-s);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'IBM Plex Mono',monospace;color:var(--muted);transition:all .15s;flex-shrink:0;margin-top:1px}
+.choice-btn.sel .choice-letter{background:#1A1917;border-color:#1A1917;color:#fff}
+.choice-btn.correct{background:var(--green-l);border-color:var(--green-b)}
+.choice-btn.correct .choice-letter{background:var(--green);border-color:var(--green);color:#fff}
+.choice-btn.wrong{background:var(--red-l);border-color:var(--red-b)}
+.choice-btn.wrong .choice-letter{background:var(--red);border-color:var(--red);color:#fff}
+.choice-btn.reveal{background:var(--green-l);border-color:var(--green-b)}
+.choice-btn.reveal .choice-letter{background:var(--green);border-color:var(--green);color:#fff}
+.choice-btn:disabled{cursor:default}
+.submit-btn{width:100%;margin-top:10px;background:var(--teal);color:#fff;border:none;border-radius:var(--rs);padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:opacity .15s,transform .1s}
+.submit-btn:active{transform:scale(.98);opacity:.85}
+.submit-btn:disabled{background:var(--border-s);cursor:default}
+.feedback{border-radius:var(--rs);padding:12px;margin-top:10px;font-size:13px;line-height:1.8;display:none}
+.feedback.correct{background:var(--green-l);border:.5px solid var(--green-b)}
+.feedback.partial{background:var(--amber-l);border:.5px solid var(--amber-b)}
+.feedback.wrong{background:var(--red-l);border:.5px solid var(--red-b)}
+.fb-badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;margin-bottom:6px;font-family:'IBM Plex Mono',monospace}
+.feedback.correct .fb-badge{background:var(--green);color:#fff}
+.feedback.partial .fb-badge{background:var(--amber);color:#fff}
+.feedback.wrong .fb-badge{background:var(--red);color:#fff}
+.unsure-btn{width:100%;margin-top:6px;background:transparent;border:.5px solid var(--border-s);border-radius:var(--rs);padding:8px;font-size:12px;cursor:pointer;color:var(--muted);font-family:'Noto Sans JP',sans-serif;display:none}
+.unsure-btn.active{background:var(--amber-l);border-color:var(--amber-b);color:var(--amber)}
+.next-btn{width:100%;margin-top:10px;background:var(--surface);border:1.5px solid var(--border-s);border-radius:var(--rs);padding:13px;font-size:14px;cursor:pointer;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-weight:500;transition:background .15s;display:none}
+.next-btn:active{background:var(--surface2)}
+
+/* FINAL */
+.final-wrap{padding:24px 0;text-align:center}
+.outcome-banner{display:inline-block;background:var(--teal-l);border:1px solid var(--teal-b);border-radius:var(--r);padding:11px 22px;margin-bottom:20px}
+.outcome-lbl{font-size:11px;color:var(--teal);font-weight:700;letter-spacing:.06em;font-family:'IBM Plex Mono',monospace}
+.outcome-txt{font-size:13px;margin-top:3px}
+.score-ring{width:110px;height:110px;margin:0 auto 12px;position:relative}
+.score-ring svg{width:110px;height:110px;transform:rotate(-90deg)}
+.score-ring circle{fill:none;stroke-width:7}
+.score-track{stroke:var(--surface2)}
+.score-fill{stroke:var(--teal);stroke-linecap:round;transition:stroke-dashoffset 1s ease}
+.score-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:26px;font-weight:700;font-family:'IBM Plex Mono',monospace}
+.score-denom{font-size:13px;color:var(--muted)}
+.final-msg{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.7}
+.action-btns{display:flex;flex-direction:column;gap:8px}
+.btn-primary{background:var(--teal);color:#fff;border:none;border-radius:var(--rs);padding:13px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Noto Sans JP',sans-serif;width:100%}
+.btn-secondary{background:var(--surface);color:var(--text);border:1.5px solid var(--border-s);border-radius:var(--rs);padding:12px;font-size:13px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;width:100%}
+.btn-review{background:var(--amber-l);color:var(--amber);border:1.5px solid var(--amber-b);border-radius:var(--rs);padding:12px;font-size:13px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;width:100%;font-weight:500}
+textarea{width:100%;background:var(--surface);border:.5px solid var(--border);border-radius:var(--rs);padding:10px 12px;font-size:13px;color:var(--text);resize:none;min-height:80px;font-family:'Noto Sans JP',sans-serif;margin-bottom:7px;line-height:1.6;-webkit-appearance:none}
+textarea:focus{outline:none;border-color:var(--border-s)}
+.ai-resp{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:13px;margin-top:10px;font-size:13px;line-height:1.8;display:none}
+.loading-dots{display:none;align-items:center;gap:8px;padding:12px 0;color:var(--muted);font-size:13px}
+.loading-dots.show{display:flex}
+.dot{width:5px;height:5px;background:var(--hint);border-radius:50%;animation:blink 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s}
+.dot:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-5px);opacity:1}}
+
+/* REVIEW */
+#review{display:none;max-width:520px;margin:0 auto}
+.review-header{background:linear-gradient(135deg,#005A62,#00818A);padding:20px 16px;color:#fff}
+.review-header h2{font-size:18px;font-weight:700;margin-bottom:4px}
+.review-header p{font-size:13px;opacity:.8}
+.review-main{padding:16px 16px 48px}
+.review-q-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:12px}
+.review-q-label{font-size:10px;font-weight:700;color:var(--teal);font-family:'IBM Plex Mono',monospace;margin-bottom:6px;letter-spacing:.06em}
+.review-q-scenario{font-size:11px;color:var(--muted);margin-bottom:8px}
+.review-q-title{font-size:13px;font-weight:500;margin-bottom:10px;line-height:1.6}
+.review-status{display:inline-block;font-size:10px;font-family:'IBM Plex Mono',monospace;padding:2px 7px;border-radius:4px;margin-bottom:8px}
+.review-status.wrong{background:var(--red-l);color:var(--red)}
+.review-status.unsure{background:var(--amber-l);color:var(--amber)}
+.review-q-clear{font-size:12px;color:var(--muted);text-decoration:underline;cursor:pointer;background:none;border:none;margin-top:8px;display:block}
+.empty-review{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty-review .emoji{font-size:40px;margin-bottom:12px}
+</style>
+</head>
+<body>
+<header class="app-header">
+  <span class="tl-badge">鉄則</span>
+  <span class="header-title" id="header-title">内科レジデントの鉄則 第4版</span>
+  <span class="header-score" id="header-score"></span>
+</header>
+<div class="progress-wrap"><div class="progress-fill" id="progress"></div></div>
+
+<!-- HOME -->
+<div id="home">
+  <div class="home-hero">
+    <h1>内科レジデントの鉄則<br>問題集</h1>
+    <span class="book-tag">第4版準拠｜全3編・39章対応</span>
+    <p>症例ベースで「鉄則」を実践的に身につける<br>病棟当直・入院・病棟管理の全範囲を網羅</p>
+  </div>
+  <div class="home-tabs">
+    <button class="tab-btn active" onclick="switchTab('all')">すべて</button>
+    <button class="tab-btn" onclick="switchTab('p1')">当直編</button>
+    <button class="tab-btn" onclick="switchTab('p2')">入院編</button>
+    <button class="tab-btn" onclick="switchTab('p3')">管理編</button>
+    <button class="tab-btn" onclick="switchTab('done')">完了</button>
+  </div>
+  <div class="progress-summary">
+    <div class="prog-ring">
+      <svg viewBox="0 0 54 54"><circle class="prog-track" cx="27" cy="27" r="22"/><circle class="prog-fill-c" id="home-ring" cx="27" cy="27" r="22" stroke-dasharray="138.2" stroke-dashoffset="138.2"/></svg>
+      <div class="prog-num" id="home-prog-num">0/30</div>
+    </div>
+    <div class="prog-text">
+      <h3>学習進捗</h3>
+      <p id="home-prog-text">まだシナリオを開始していません</p>
+    </div>
+  </div>
+  <div class="review-banner" id="review-banner" onclick="goReview()" style="display:none">
+    <div class="review-icon">📚</div>
+    <div class="review-text">
+      <h3>復習セット</h3>
+      <p>間違えた・自信がなかった問題</p>
+    </div>
+    <span class="review-count" id="review-count">0問</span>
+  </div>
+  <div class="section-head" id="list-label">全シナリオ — 病棟当直編 / 入院編 / 病棟管理編</div>
+  <div class="scenario-list" id="scenario-list"></div>
+</div>
+
+<!-- SIM -->
+<div id="sim">
+  <div class="sim-main" id="sim-main"></div>
+</div>
+
+<!-- REVIEW -->
+<div id="review">
+  <div class="review-header">
+    <h2>📚 復習セット</h2>
+    <p id="review-subtitle">間違えた・自信がなかった問題をもう一度解きましょう</p>
+  </div>
+  <div class="review-main" id="review-main"></div>
+</div>
+
+<script>
+// ============================================================
+// SCENARIO DATA — 内科レジデントの鉄則 第4版 準拠
+// Part I: 病棟当直編 (ch1-13), Part II: 入院編 (ch14-29), Part III: 病棟管理編 (ch30-39)
+// ============================================================
+const SC = [
+// ================================================================
+// I. 病棟当直編
+// ================================================================
+{id:'fever',ph:1,icon:'🌡️',title:'発熱',sub:'Ch.1 全身状態に注意しつつ，全身の所見を取る！',diff:1,
+outcome:'鉄則を実践して見逃しゼロへ',
+steps:[
+{t:'case',title:'症例：糖尿病の既往がある80歳女性',
+con:'来院3日前から排尿時痛があったが，膀胱炎と考えて様子を見ていた．本日息子から普段と様子が違うことを指摘され，体温38.7°C，来院した．バイタル：意識レベルJCS I-2，体温38.7°C，血圧120/60 mmHg，脈拍110/分，呼吸数26/分，SpO₂96%（室内気）．CRTは4秒',
+note:'鉄則①：発熱患者をみたら，まずは敗血症でないかqSOFAを評価'},
+{t:'single',title:'Q1. バイタルをみて最初に行うべき評価は？',
+ch:[{l:'A',x:'まず血液培養を提出してから評価する'},{l:'B',x:'qSOFAスコアで敗血症のリスクを評価する（呼吸数・意識・血圧の3項目）'},{l:'C',x:'尿路感染症の抗菌薬を選択する'},{l:'D',x:'体温が38.7°Cなので解熱薬を先に投与する'}],
+cor:'B',
+fb:{correct:'正解！発熱患者で最初に行うべきことはqSOFAで敗血症スクリーニング。本症例：呼吸数26/分(+1)・意識変容JCS I-2(+1)・血圧120(0)=2点。非ICU患者でqSOFA≥2点は敗血症を疑い，SOFA評価・血液培養・広域抗菌薬の準備へ進む。',wrong:'正解はB。qSOFA（呼吸数≥22・意識変容・収縮期血圧≤100）は発熱患者で最初に行う敗血症スクリーニング。本症例は2点で敗血症を強く疑う。'}},
+{t:'multi',title:'Q2. 発熱患者の「迅速な対応を要する感染症」として注意すべきものは？（複数選択）',
+ch:[{l:'A',x:'細菌性髄膜炎（発熱＋頭痛＋項部硬直）'},{l:'B',x:'壊死性筋膜炎（発熱＋強い疼痛＋捻髪音）'},{l:'C',x:'急性化膿性関節炎（発熱＋単関節の腫脹・熱感）'},{l:'D',x:'軽度の上気道炎（鼻汁＋軽い咽頭痛のみ）'}],
+cor:['A','B','C'],
+fb:{correct:'正解！A・B・Cは全て「迅速な対応を要する感染症（鉄則②）」の代表例。細菌性髄膜炎→CT後腰椎穿刺＋即時抗菌薬，壊死性筋膜炎→緊急外科的デブリードメント，急性化膿性関節炎→関節穿刺・洗浄。Dは外来フォロー可能。',partial:'A・B・Cが正解。Dは軽症の上気道炎で外来対応可能です。',wrong:'A・B・Cが正解。Dは軽症で緊急性はありません。'}},
+{t:'single',title:'Q3. 発熱患者のtop-to-bottom approachで正しいのは？',
+ch:[{l:'A',x:'原因不明なら全身CTをすぐ撮影する'},{l:'B',x:'頭部から足趾まで系統的に診察し，感染巣を検索する'},{l:'C',x:'まず採血結果を確認してから診察する'},{l:'D',x:'患者の主訴だけに絞って局所を診察する'}],
+cor:'B',
+fb:{correct:'正解！鉄則③はtop-to-bottom approach。頭頸部（髄膜炎・副鼻腔炎）→胸部（肺炎）→腹部（胆嚢炎・虫垂炎）→骨盤（UTI・骨盤内炎症）→四肢（蜂窩織炎・関節炎）→皮膚（デバイス感染・褥瘡）の順で系統的に診察する。',wrong:'正解はB。top-to-bottom approachで頭から足先まで系統的に感染巣を検索することが鉄則。'}},
+{t:'multi',title:'Q4. 院内発熱で「7D」として覚えるべき原因は？（複数選択）',
+ch:[{l:'A',x:'Drug fever（薬剤熱）'},{l:'B',x:'DVT/PE（深部静脈血栓症/肺塞栓）'},{l:'C',x:'Device（カテーテル・デバイス感染）'},{l:'D',x:'脱水（入院後の水分制限）'}],
+cor:['A','B','C'],
+fb:{correct:'正解！院内発熱の7D：Drug fever・DVT/PE・Device infection・Decubitus（褥瘡）・Diarrhea（C. diff）・Deep abscess・Delirium（せん妄は除外診断）。鉄則④：院内発熱は7Dを念頭に。脱水（D）は直接の発熱原因としては含まれません。',partial:'A・B・Cが正解。院内発熱の7Dは感染症以外の原因も含む重要な概念です。',wrong:'A・B・Cが正解（院内発熱の7D）。Dの脱水は7Dに含まれません。'}}
+]},
+{id:'shock',ph:1,icon:'⚡',title:'ショック',sub:'Ch.2 まずショックを認識せよ！原因をつかみ，蘇生せよ！',diff:2,
+outcome:'ショックの早期認識と原因別対応',
+steps:[
+{t:'case',title:'症例：バイタル低下の呼び出し',
+con:'病棟から「患者さんが反応しない」と連絡があった．70歳男性，消化管出血で入院中．バイタル：血圧78/50 mmHg，脈拍128/分（細脈），呼吸数24/分，SpO₂91%，意識：呼びかけに反応なし，皮膚：湿潤・冷感あり，CRT：4秒以上',
+note:'ショックとは：血圧低下だけでなく，末梢循環不全（皮膚冷感・CRT延長・乏尿）も重要なショックの認識指標'},
+{t:'single',title:'Q1. まず行うべきことは？',
+ch:[{l:'A',x:'病歴を詳しく聴取してからショックの種類を決定する'},{l:'B',x:'A（気道）B（呼吸）C（循環）の評価と同時蘇生を開始する'},{l:'C',x:'血液検査の結果が返ってきてから輸液量を決める'},{l:'D',x:'モニターを装着して担当医が来るまで待つ'}],
+cor:'B',
+fb:{correct:'正解！ショックではABCの評価と蘇生を同時に行う。①気道確保・酸素投与②大口径ルート（16G以上）2本確保③細胞外液500mL〜1000mL急速投与④原因検索（RUSH protocol）⑤必要に応じて昇圧薬。「評価が終わってから治療」では手遅れになる。',wrong:'正解はB。ショックはABCの評価と蘇生を同時進行するのが原則。'}},
+{t:'multi',title:'Q2. ショックの4分類として正しいのは？（複数選択）',
+ch:[{l:'A',x:'循環血液量減少性ショック（出血・脱水）'},{l:'B',x:'心原性ショック（心筋梗塞・心不全・不整脈）'},{l:'C',x:'血液分配異常性ショック（敗血症・アナフィラキシー・神経原性）'},{l:'D',x:'閉塞性ショック（肺塞栓・緊張性気胸・心タンポナーデ）'}],
+cor:['A','B','C','D'],
+fb:{correct:'正解！ショックの4分類（RSVD）：①循環血液量減少（Relative/Absolute volume loss）②心原性（pump failure）③血液分配異常（distributive）④閉塞性（obstructive）。閉塞性ショックは見逃すと致命的→緊急処置（胸腔穿刺・心嚢穿刺・tPA）が必要。',partial:'A〜D全て正解。ショックの4分類は全て覚えてください。',wrong:'A〜D全て正解（ショックの4分類：循環血液量減少性・心原性・血液分配異常性・閉塞性）。'}},
+{t:'single',title:'Q3. 輸液蘇生後も血圧が改善しない。次のステップは？',
+ch:[{l:'A',x:'さらに輸液を追加し続ける'},{l:'B',x:'ノルアドレナリンなどの昇圧薬を開始する'},{l:'C',x:'血圧が戻るまでモニタリングのみ継続'},{l:'D',x:'まず内服での降圧薬を中止する確認をする'}],
+cor:'B',
+fb:{correct:'正解！輸液蘇生（30mL/kg）後もMAP<65mmHgが続く場合は昇圧薬を開始。敗血症性ショックではノルアドレナリン（0.01〜0.5μg/kg/分）が第一選択。大量輸液を続けると肺水腫・コンパートメント症候群のリスクがある。',wrong:'正解はB。輸液蘇生後もMAP<65mmHgが持続する場合は昇圧薬（ノルアドレナリン）の開始が必要。'}}
+]},
+{id:'hypoxia',ph:1,icon:'🫁',title:'酸素飽和度低下',sub:'Ch.3 低酸素の原因を迅速に同定し，正しい酸素投与を！',diff:2,
+outcome:'低酸素血症の原因別対応と酸素療法の適正使用',
+steps:[
+{t:'case',title:'症例：病棟ナースコール「SpO₂が下がっています」',
+con:'65歳男性，大腸癌術後3日目．夜間にSpO₂80%まで低下，酸素投与されていない状態．バイタル：血圧130/80，脈拍102，呼吸数28/分，SpO₂80%→酸素3L/分投与後90%に改善．患者は苦しそうで呼吸補助筋を使用している',
+note:'低酸素血症の5つの機序：①換気血流不均等②拡散障害③シャント④肺胞低換気⑤低酸素環境'},
+{t:'single',title:'Q1. まず行うべきことは？',
+ch:[{l:'A',x:'胸部X線を撮影してから酸素投与を始める'},{l:'B',x:'酸素投与を開始しながら原因を検索する（ABCDEアプローチ）'},{l:'C',x:'挿管の準備をしてから酸素を投与する'},{l:'D',x:'血液ガスの結果を待ってから対応を決める'}],
+cor:'B',
+fb:{correct:'正解！低酸素血症では「まず酸素投与，同時に原因検索」。治療しながら鑑別診断を進めるのが原則。ABCDE（Airway・Breathing・Circulation・Disability・Exposure）で系統的に評価し，肺炎・心不全・PE・気胸・無気肺などを検索する。',wrong:'正解はB。まず酸素投与を開始し，同時に原因検索。検査結果を待ってから治療では手遅れになる。'}},
+{t:'multi',title:'Q2. SpO₂が上がらない場合に検討すべき原因は？（複数選択）',
+ch:[{l:'A',x:'緊張性気胸（呼吸音消失・気管偏位・頸静脈怒張）'},{l:'B',x:'大量胸水（一側の呼吸音低下・打診で濁音）'},{l:'C',x:'肺塞栓（突然発症・D-dimer上昇・下腿腫脹）'},{l:'D',x:'鼻汁による鼻閉（点鼻薬で改善する）'}],
+cor:['A','B','C'],
+fb:{correct:'正解！酸素投与でも改善しない低酸素血症の重要な鑑別：緊張性気胸（緊急胸腔穿刺）・大量胸水（胸腔ドレナージ）・肺塞栓（抗凝固/血栓溶解）。これらは迅速な処置が必要。Dの鼻閉は上気道の問題で、酸素投与で対応可能。',partial:'A・B・Cが正解。D（鼻閉）は酸素投与に影響するほどの低酸素血症の原因にはなりません。',wrong:'A・B・Cが正解。D（単純な鼻閉）は酸素飽和度低下の主要な原因にはなりません。'}},
+{t:'single',title:'Q3. COPD患者に高流量酸素を投与した場合のリスクは？',
+ch:[{l:'A',x:'特にリスクなし。SpO₂は100%に保つべき'},{l:'B',x:'CO₂ナルコーシス（高CO₂血症・意識低下）を起こす可能性がある'},{l:'C',x:'低血糖を起こすリスクがある'},{l:'D',x:'高流量酸素は必ず肺水腫を起こす'}],
+cor:'B',
+fb:{correct:'正解！COPD患者は低酸素換気ドライブ（hypoxic drive）に頼って呼吸していることがある。高流量酸素でSpO₂を過度に上げると，換気ドライブが消失してCO₂が蓄積し，CO₂ナルコーシス（意識低下・呼吸抑制）を起こす。目標SpO₂は88〜92%。',wrong:'正解はB。COPDへの高流量酸素はCO₂ナルコーシスのリスクがある。目標SpO₂は88〜92%。'}}
+]},
+{id:'altered_consciousness',ph:1,icon:'🧠',title:'意識障害',sub:'Ch.4 緊急性の高いものを見逃すな！AIUEO TIPSを活用せよ',diff:2,
+outcome:'意識障害の系統的鑑別と緊急対応',
+steps:[
+{t:'case',title:'症例：「意識がおかしい」病棟からのコール',
+con:'75歳男性，2型糖尿病・高血圧で入院中．夕食後に「ぼーっとしている」とナースから連絡．バイタル：血圧180/100 mmHg，脈拍88，呼吸数18，SpO₂98%．GCS：E3V3M5=11点．血糖：32 mg/dL',
+note:'意識障害のAIUEO TIPS：Alcohol・Insulin（低血糖）・Uremia・Encephalopathy・Overdose・Trauma・Infection・Psychiatric・Stroke'},
+{t:'single',title:'Q1. この患者で最初に行うべきことは？',
+ch:[{l:'A',x:'頭部CTをすぐ撮影する'},{l:'B',x:'血糖が32 mg/dLなので，まず50%ブドウ糖20mLを静注する'},{l:'C',x:'腰椎穿刺で髄膜炎を除外する'},{l:'D',x:'精神科コンサルトを依頼する'}],
+cor:'B',
+fb:{correct:'正解！血糖32 mg/dLは重症低血糖。直ちに50%ブドウ糖20mL（10g）を静注する。低血糖は最も治療しやすい意識障害の原因であり，まず除外・治療することが原則（AIUEO TIPSのI：Insulin）。意識改善後に原因を追加検索する。',wrong:'正解はB。血糖32mg/dLは重症低血糖→50%ブドウ糖静注が最優先。CTや腰椎穿刺より先に行う。'}},
+{t:'multi',title:'Q2. 意識障害患者でBedside blood glucoseと同時に行うべき検査は？（複数選択）',
+ch:[{l:'A',x:'12誘導心電図（心房細動→脳塞栓，QT延長など）'},{l:'B',x:'SpO₂・呼吸数（低酸素・CO₂貯留）'},{l:'C',x:'体温（低体温・高体温）'},{l:'D',x:'腹部エコー（胆嚢炎の確認）'}],
+cor:['A','B','C'],
+fb:{correct:'正解！意識障害の初期評価：①血糖②SpO₂・呼吸③体温④血圧・脈拍⑤12誘導心電図を同時に行う。これらは全てベッドサイドで即座に確認できる重要な情報。腹部エコー（D）は腹部疾患の評価として有用だが、意識障害の初期評価では優先度が低い。',partial:'A・B・Cが正解。意識障害の初期ベッドサイド評価として必須です。',wrong:'A・B・Cが正解。D（腹部エコー）は意識障害の初期評価では優先度が低い。'}},
+{t:'single',title:'Q3. 意識障害患者で「頭部CT撮影前に」腰椎穿刺を行ってはいけない主な理由は？',
+ch:[{l:'A',x:'放射線被曝を最小化するため'},{l:'B',x:'脳ヘルニアのリスク（頭蓋内圧亢進を見逃す危険）'},{l:'C',x:'腰椎穿刺は痛みが強いので患者に説明が必要なため'},{l:'D',x:'感染リスクが高いため'}],
+cor:'B',
+fb:{correct:'正解！頭蓋内圧が亢進している状態で腰椎穿刺を行うと，脳ヘルニア（脳が下方に押し出される）を起こし致命的になりうる。このため意識障害＋発熱（髄膜炎疑い）では，まず頭部CTで脳ヘルニアの所見（脳浮腫・腫瘤）を否定してから腰椎穿刺を行う（ただし細菌性髄膜炎疑いではCTを待たずに抗菌薬を先に投与）。',wrong:'正解はB。頭蓋内圧亢進時の腰椎穿刺は脳ヘルニアのリスクがあるため，CT先行が原則。'}}
+]},
+{id:'arrhythmia',ph:1,icon:'❤️',title:'徐脈・頻脈',sub:'Ch.5 緊急性の判断とモニタリング，確実な対応を！',diff:3,
+outcome:'不整脈の緊急度判定と初期対応',
+steps:[
+{t:'case',title:'症例：「脈が速い」病棟からのコール',
+con:'68歳女性，術後2日目．ナースより「脈が急に速くなった」と連絡．バイタル：血圧92/60 mmHg，脈拍168/分・不整，SpO₂94%，意識清明だが動悸・息切れを訴えている．12誘導心電図で心房細動（AF）と確認',
+note:'不整脈対応の原則：①循環動態の安定性を最初に判断（安定・不安定）②不安定なら即カルディオバージョン③安定なら原因検索と薬物治療'},
+{t:'single',title:'Q1. この患者の最初の対応として最も適切なのは？',
+ch:[{l:'A',text:'抗凝固薬を投与してから不整脈を治療する'},{l:'B',text:'循環動態が不安定（BP92/60・症状あり）→直流通電（カルディオバージョン）を検討'},{l:'C',text:'まず24時間モニタリングして自然停止を待つ'},{l:'D',text:'精神安定剤で動悸の症状を抑える'}].map(c=>({l:c.l,x:c.text||c.x})),
+cor:'B',
+fb:{correct:'正解！不整脈の対応では「循環動態の安定性」が最重要。循環動態不安定（低血圧・意識低下・強い症状）なら，AF・SVT・VT問わず即時直流通電（synchronized DC cardioversion）が適応。抗凝固薬を待つ必要はない。本症例：BP92/60+症状あり→不安定AFとして緊急処置。',wrong:'正解はB。循環動態が不安定な頻脈性不整脈は，原因を問わず直流通電（カルディオバージョン）が最優先。'}},
+{t:'multi',title:'Q2. 発作性心房細動（症状あり・循環動態安定）の対応として正しいのは？（複数選択）',
+ch:[{l:'A',x:'レートコントロール：ジルチアゼムまたはβブロッカー（心拍数<100/分を目標）'},{l:'B',x:'発症48時間以内なら洞調律化（カルディオバージョン）を検討'},{l:'C',x:'発症48時間超または不明なら抗凝固療法後に洞調律化を検討'},{l:'D',x:'全例で即時に永久ペースメーカーを植え込む'}],
+cor:['A','B','C'],
+fb:{correct:'正解！AFの管理：①レートコントロール（ジルチアゼム・β遮断薬）②リズムコントロール（洞調律化）の選択。48時間以内→カルディオバージョン可（血栓リスク低い）。48時間超または不明→経食道心エコーで血栓除外または3週間の抗凝固後にカルディオバージョン。D（永久ペースメーカー）はAFの治療ではない。',partial:'A・B・Cが正解。D（永久ペースメーカー）はAFの適応ではない。',wrong:'A・B・Cが正解。D（永久ペースメーカー）はAFの治療法ではない。'}},
+{t:'single',title:'Q3. 徐脈（HR 38/分）で意識消失が起きた。直ちに行うことは？',
+ch:[{l:'A',x:'アトロピン 0.5〜1mg 静注（迷走神経反射や洞不全症候群への第一選択）'},{l:'B',x:'カルシウム製剤を静注する'},{l:'C',x:'血液検査でK値を確認してから治療する'},{l:'D',x:'昇圧薬を投与して経過観察'}],
+cor:'A',
+fb:{correct:'正解！症候性徐脈（意識消失・低血圧・息切れ）の第一選択はアトロピン0.5〜1mg静注（最大3mg）。無効なら経皮ペーシング（TCP）または一時的ペーシング。β遮断薬・ジルチアゼムの過剰服用が原因の場合はカルシウム・グルカゴンを追加。',wrong:'正解はA。症候性徐脈にはアトロピン静注が第一選択。'}}
+]},
+{id:'chest_pain_ward',ph:1,icon:'💔',title:'胸痛（病棟当直）',sub:'Ch.6 見逃し厳禁の疾患を除外せよ！',diff:3,
+outcome:'胸痛の緊急性評価と鑑別診断',
+steps:[
+{t:'case',title:'症例：「胸が痛い」病棟からのコール',
+con:'55歳男性，術後翌日．「急に胸が苦しい」と訴えてナースが連絡．バイタル：血圧88/54 mmHg，脈拍104，呼吸数26，SpO₂89%．心電図：洞性頻脈のみ．両下腿に浮腫あり，右下腿の腫脹・熱感あり',
+note:'胸痛で絶対に見逃せない5疾患：①ACS（急性冠症候群）②大動脈解離③肺塞栓④緊張性気胸⑤食道破裂'},
+{t:'single',title:'Q1. この症例で最も疑うべき疾患は？',
+ch:[{l:'A',x:'急性冠症候群（STEMI）'},{l:'B',x:'急性肺塞栓症（PE）'},{l:'C',x:'胃食道逆流症（GERD）'},{l:'D',x:'肋間神経痛'}],
+cor:'B',
+fb:{correct:'正解！術後・右下腿腫脹（DVT）＋突然の呼吸困難＋低SpO₂＋低血圧→急性肺塞栓症を強く疑う。PEのWells scoreを計算（DVT症状・HR>100・術後臥床・DVT/PE既往・他疾患の可能性低い・喀血・癌）。高リスクなら即CTPA。循環動態不安定→血栓溶解（tPA 100mg/2時間）。',wrong:'正解はB。術後＋DVT所見＋急性の呼吸困難＋低血圧はPEの典型像。'}},
+{t:'multi',title:'Q2. 胸痛患者への初期対応として正しいのは？（複数選択）',
+ch:[{l:'A',x:'12誘導心電図（到着10分以内）'},{l:'B',x:'モニター・ルート確保・酸素投与'},{l:'C',x:'胸部X線（縦隔拡大→大動脈解離，浸潤影→肺炎）'},{l:'D',x:'まず内科医が来てから全ての検査を指示する'}],
+cor:['A','B','C'],
+fb:{correct:'正解！胸痛の初期対応はABC＋12誘導ECG（10分以内）＋胸部X線の同時進行。D（全ての検査を後回し）は手遅れになる。心電図でSTEMI確認→カテ室起動，大動脈解離疑い→造影CT，PE疑い→CTPA，気胸→胸部X線・胸腔ドレナージ。',partial:'A・B・Cが正解。D（後回し）では心停止・致死的疾患を見逃す危険があります。',wrong:'A・B・Cが正解。Dのような「待機してから検査」は胸痛診療では危険。'}},
+{t:'single',title:'Q3. 「大動脈解離」と「ACS」を鑑別するために特に重要な所見は？',
+ch:[{l:'A',x:'左右上肢の血圧差（>20mmHg）と胸背部への移動痛'},{l:'B',x:'トロポニンの上昇'},{l:'C',x:'心電図のST変化'},{l:'D',x:'年齢（高齢者はACSが多い）'}],
+cor:'A',
+fb:{correct:'正解！大動脈解離の鑑別に重要：①「引き裂かれるような」突発性の最大痛②背部・腰部への移動痛③左右上肢の血圧差（>20mmHg）④脈拍の左右差。トロポニン・ST変化はACSでも大動脈解離（冠動脈に解離が及ぶと）でも上昇しうるため鑑別にはならない。大動脈解離疑いにtPAは禁忌。',wrong:'正解はA。大動脈解離の鑑別で最重要なのは移動痛と左右血圧差。'}}
+]},
+{id:'abdominal_pain_ward',ph:1,icon:'🩺',title:'腹痛（病棟当直）',sub:'Ch.7 生命に危険を及ぼす疾患を除外せよ！',diff:2,
+outcome:'急性腹症の緊急性評価と対応',
+steps:[
+{t:'case',title:'症例：「お腹が痛い」と訴える患者',
+con:'62歳女性，高血圧・脂質異常症の既往あり，担当外の病棟で夜間当直中に腹痛の訴え．バイタル：血圧84/52 mmHg，脈拍112，呼吸数20，SpO₂97%．腹部：脐周囲から左側腹部にかけての拍動性の痛み，腹部触診で臍周囲に拍動性腫瘤を触知',
+note:'腹痛で見逃し厳禁：①腹部大動脈瘤破裂（AAA）②腸間膜動脈閉塞③腸閉塞④消化管穿孔⑤急性膵炎'},
+{t:'single',title:'Q1. この症例で最初に疑うべき疾患は？',
+ch:[{l:'A',x:'過敏性腸症候群'},{l:'B',x:'尿路結石による腎疝痛'},{l:'C',x:'腹部大動脈瘤（AAA）破裂（切迫破裂）'},{l:'D',x:'急性胃腸炎'}],
+cor:'C',
+fb:{correct:'正解！低血圧＋頻脈＋腹部拍動性腫瘤はAAAの古典的三徴。切迫破裂・破裂AAAは緊急手術適応。「疑ったら即CT（循環動態が保たれている場合）または直接手術室へ」が原則。尿路結石は腹部拍動性腫瘤を呈しない。',wrong:'正解はC。低血圧+頻脈+腹部拍動性腫瘤→AAAの緊急処置が必要。'}},
+{t:'multi',title:'Q2. 腹部診察で「腹膜炎」を示唆する所見は？（複数選択）',
+ch:[{l:'A',x:'筋性防御（腹壁が板状硬）'},{l:'B',x:'Blumberg徴候（反跳痛：圧迫を離すと痛みが増強）'},{l:'C',x:'腸蠕動音の消失'},{l:'D',x:'腸蠕動音の亢進（腸閉塞の所見）'}],
+cor:['A','B','C'],
+fb:{correct:'正解！腹膜炎の三大所見：①筋性防御（板状硬）②Blumberg徴候（反跳痛）③腸蠕動音消失。これらがあれば緊急手術を要する消化管穿孔・腸管壊死を強く疑う。D（腸蠕動音亢進）は機械的腸閉塞の所見で，腹膜炎とは逆。',partial:'A・B・Cが正解。D（腸蠕動音亢進）は腸閉塞の所見で腹膜炎とは逆。',wrong:'A・B・Cが正解（腹膜炎の三大所見）。D（腸蠕動音亢進）は腸閉塞の所見。'}},
+{t:'single',title:'Q3. 腸閉塞の症状として正しいのは？',
+ch:[{l:'A',x:'腹痛・嘔吐・排ガス停止・腹部膨満の4徴'},{l:'B',x:'血便・テネスムス・発熱'},{l:'C',x:'右上腹部痛・Murphy徴候陽性'},{l:'D',x:'腰痛・血尿・疝痛'}],
+cor:'A',
+fb:{correct:'正解！腸閉塞の4徴：腹痛・嘔吐・排ガス停止・腹部膨満。「おならが出ない」という訴えは腸閉塞を疑う重要なヒント。腹部X線で鏡面像（ニボー）を確認。B（血便・テネスムス）は直腸病変，C（Murphy徴候）は胆嚢炎，D（疝痛・血尿）は尿路結石。',wrong:'正解はA。腸閉塞の4徴：腹痛・嘔吐・排ガス停止・腹部膨満。'}}
+]},
+{id:'headache_ward',ph:1,icon:'💢',title:'頭痛（病棟当直）',sub:'Ch.8 くも膜下出血を絶対に見逃すな！',diff:2,
+outcome:'二次性頭痛の見逃しを防ぐ',
+steps:[
+{t:'case',title:'症例：「頭が痛い」と訴える入院患者',
+con:'48歳女性，膝関節手術のため整形外科病棟に入院中．夜間に「今まで経験したことのない頭痛」と訴えてナースが連絡．バイタル：血圧168/96 mmHg，脈拍84，呼吸数16，SpO₂99%．項部硬直あり',
+note:'二次性頭痛のred flags（SNOOP）：Sudden onset（突発）・Neurologic deficit（神経症状）・Old age/Onset after 50y・Orthostatic・Papilledema'},
+{t:'single',title:'Q1. この症例で最初に行うべきことは？',
+ch:[{l:'A',x:'鎮痛薬（アセトアミノフェン）を投与して様子を見る'},{l:'B',x:'「今まで経験したことのない頭痛」+項部硬直→頭部CT緊急撮影'},{l:'C',x:'眼科に連絡して眼底検査を依頼する'},{l:'D',x:'精神科に連絡して心因性頭痛を除外する'}],
+cor:'B',
+fb:{correct:'正解！「今まで経験したことのない・人生最悪の頭痛（thunderclap headache）」＋項部硬直はくも膜下出血（SAH）まで除外が原則。直ちに頭部単純CTを撮影。CT感度：発症24時間以内92〜98%。CT陰性でも12〜24時間後に腰椎穿刺（キサントクロミア確認）が必要。',wrong:'正解はB。Thunderclap headache+項部硬直→SAHを緊急除外。鎮痛薬で様子見は致命的。'}},
+{t:'multi',title:'Q2. 頭痛のred flags（緊急CT/MRIが必要なサイン）は？（複数選択）',
+ch:[{l:'A',x:'突発性・最大強度の頭痛（雷鳴頭痛）'},{l:'B',x:'発熱＋項部硬直（髄膜炎・SAH）'},{l:'C',x:'神経学的局所症状（片麻痺・複視・構音障害）'},{l:'D',x:'毎日同じ時間帯に起こる軽度の頭痛（緊張型頭痛の可能性が高い）'}],
+cor:['A','B','C'],
+fb:{correct:'正解！頭痛のred flags（SNOOP）：突発性・神経症状・50歳以上の新規・起立性・乳頭浮腫，加えて発熱＋項部硬直・体位変換で悪化・悪化傾向など。D（毎日同じパターンの軽度の頭痛）は緊張型頭痛の可能性が高く，red flagsには該当しない。',partial:'A・B・Cが正解（頭痛のred flags）。Dは慢性緊張型頭痛の特徴でred flagsではない。',wrong:'A・B・Cが正解。Dは緊張型頭痛の特徴でred flagsではない。'}},
+{t:'single',title:'Q3. SAH確診後，最も緊急に行うべきことは？',
+ch:[{l:'A',x:'脳神経外科への緊急コンサルト'},{l:'B',x:'血圧が高いので降圧薬を投与する'},{l:'C',x:'MRIを追加撮影して血管奇形を確認する'},{l:'D',x:'抗凝固薬でDVTを予防する'}],
+cor:'A',
+fb:{correct:'正解！SAH確認後は脳神経外科への緊急コンサルト。動脈瘤クリッピングまたはコイル塞栓術の適応を緊急判断する。血圧管理（収縮期<160mmHg）も同時に行うが，スタンドアローンの降圧では治療にならない。抗凝固薬（D）は出血拡大のリスクで禁忌。',wrong:'正解はA。SAH確定→脳神経外科緊急コンサルトが最優先。'}}
+]},
+{id:'nausea',ph:1,icon:'🤢',title:'嘔気・嘔吐（病棟当直）',sub:'Ch.9 中枢性の原因を見逃すな！',diff:1,
+outcome:'嘔気・嘔吐の鑑別と対応',
+steps:[
+{t:'case',title:'症例：「吐き気がある」とナースから連絡',
+con:'60歳男性，高血圧・心房細動でワルファリン内服中．入院中に嘔気・嘔吐が出現．バイタル：血圧156/94 mmHg，脈拍84，SpO₂98%，呼吸数16．嘔吐物：食物残渣のみ．眼振あり，歩行がふらつく',
+note:'嘔気・嘔吐の鑑別：末梢性（消化管）vs 中枢性（脳・小脳）'},
+{t:'single',title:'Q1. 眼振＋歩行失調がある嘔気・嘔吐。最も注意すべき疾患は？',
+ch:[{l:'A',x:'急性胃腸炎（ウイルス性）'},{l:'B',x:'薬物性（抗菌薬の副作用）'},{l:'C',x:'小脳出血・小脳梗塞（中枢性前庭障害）'},{l:'D',x:'良性発作性頭位めまい症（BPPV）'}],
+cor:'C',
+fb:{correct:'正解！眼振＋歩行失調を伴う嘔気・嘔吐は中枢性前庭障害（小脳出血・小脳梗塞）まで除外が必要。特にワルファリン内服中は脳出血リスクが高い。HINTSテスト（Head Impulse・Nystagmus・Test of Skew）で末梢性か中枢性かをスクリーニング。即頭部CTまたはMRIを撮影。',wrong:'正解はC。眼振+歩行失調+嘔気→中枢性（小脳出血・梗塞）を緊急除外。ワルファリン内服中はリスクさらに高い。'}},
+{t:'multi',title:'Q2. 嘔気・嘔吐の原因として「中枢性」のものは？（複数選択）',
+ch:[{l:'A',x:'脳腫瘍・頭蓋内圧亢進'},{l:'B',x:'小脳病変（小脳梗塞・出血）'},{l:'C',x:'薬剤（オピオイド・化学療法・ジゴキシン中毒）'},{l:'D',x:'急性胃腸炎（ウイルス性腸炎）'}],
+cor:['A','B','C'],
+fb:{correct:'正解！中枢性嘔気：①脳腫瘍・頭蓋内圧亢進②小脳病変③薬剤（CTZ受容体を直接刺激：オピオイド・化学療法・ジゴキシン）④代謝異常（低ナトリウム・高カルシウム・尿毒症）。D（急性胃腸炎）は末梢性（腸管）の原因。',partial:'A・B・Cが正解。D（急性胃腸炎）は末梢性の嘔気原因。',wrong:'A・B・Cが正解。D（急性胃腸炎）は末梢性で中枢性ではない。'}},
+{t:'single',title:'Q3. 術後患者での嘔気・嘔吐の対応として第一選択は？',
+ch:[{l:'A',x:'絶食・点滴で改善を待つのみ'},{l:'B',x:'メトクロプラミド（プリンペラン）または5-HT₃拮抗薬（オンダンセトロン）を投与'},{l:'C',x:'ステロイドを大量に投与する'},{l:'D',x:'必ず頭部CTを撮影する'}],
+cor:'B',
+fb:{correct:'正解！術後嘔気（PONV：Post-Operative Nausea and Vomiting）の治療：①5-HT₃拮抗薬（オンダンセトロン4mg静注）：最も効果的②メトクロプラミド：ドパミン拮抗薬③デキサメタゾン：予防として有効。中枢神経症状がなければ頭部CTは不要。',warning:'正解はB。術後嘔気にはオンダンセトロンまたはメトクロプラミドが第一選択。'}}
+]},
+{id:'glucose_ward',ph:1,icon:'💉',title:'血糖異常（病棟当直）',sub:'Ch.10 低血糖は今すぐ治療！高血糖は原因を検索！',diff:2,
+outcome:'低血糖・高血糖の緊急対応',
+steps:[
+{t:'case',title:'症例：「患者さんが変です」と夜間ナースコール',
+con:'70歳男性，2型糖尿病でインスリン療法中．夕食時に食事摂取不良だったが，インスリンはいつも通り投与された．夜間に発汗・震え・意識混濁が出現．血糖：34 mg/dL',
+note:'低血糖の定義：血糖<70 mg/dL（症状あれば即治療，<50なら必ず治療）'},
+{t:'single',title:'Q1. 血糖34 mg/dLの患者への対応は？',
+ch:[{l:'A',x:'50%ブドウ糖液 20mL を静注（=10gのブドウ糖）'},{l:'B',x:'インスリン拮抗薬（グルカゴン）を必ず投与する'},{l:'C',x:'経口でジュースを飲ませる（意識がある場合）'},{l:'D',x:'血糖が50以下になるまで様子を見る'}],
+cor:'A',
+fb:{correct:'正解！意識障害を伴う重症低血糖→50%ブドウ糖液20mL（10g）を静注。意識が戻ったら15分後に再検し，食事が取れなければブドウ糖点滴を継続。グルカゴン（B）は静脈路がない場合の代替。意識低下あれば経口投与（C）は誤嚥のリスク。',wrong:'正解はA。意識障害を伴う重症低血糖→50%ブドウ糖液20mL静注が第一選択。'}},
+{t:'multi',title:'Q2. 低血糖が繰り返す場合の原因検索として重要なのは？（複数選択）',
+ch:[{l:'A',x:'インスリン・スルホニル尿素薬（SU薬）の過量・食事摂取不良との不均衡'},{l:'B',x:'腎機能低下（薬物蓄積）や肝機能低下（糖新生障害）'},{l:'C',x:'副腎不全・インスリノーマ'},{l:'D',x:'ストレスや過労（一般的に高血糖になるため低血糖の原因にはならない）'}],
+cor:['A','B','C'],
+fb:{correct:'正解！繰り返す低血糖の原因：①薬剤（インスリン・SU薬の過量）②食事摂取不良との不均衡③腎不全（薬物蓄積）④肝不全（糖新生障害）⑤副腎不全⑥インスリノーマ。Dのストレスは通常高血糖を引き起こす。',partial:'A・B・Cが正解。D（ストレス）は通常高血糖を招き，低血糖の原因にはならない。',wrong:'A・B・Cが正解。D（ストレス）は低血糖の原因ではなく，むしろ高血糖を招く。'}},
+{t:'single',title:'Q3. 高血糖（随時血糖600 mg/dL）の病棟患者への対応は？',
+ch:[{l:'A',x:'インスリンを即座に静注する'},{l:'B',x:'意識状態・バイタル確認→原因（DKA/HHS？）を検索→適切な治療を選択'},{l:'C',x:'血糖が1000以上になるまで様子を見る'},{l:'D',x:'経口の血糖降下薬を増量する'}],
+cor:'B',
+fb:{correct:'正解！高血糖では①意識状態・バイタル確認②DKA（アシドーシス・ケトン体陽性・若年1型糖尿病）vs HHS（高齢2型糖尿病・高浸透圧・脱水・意識障害）の鑑別③原因検索（感染・インスリン中断・薬剤）④適切な治療（DKA→インスリン持続静注，HHS→輸液が主体）を順番に行う。',wrong:'正解はB。高血糖では原因検索と適切な治療法の選択が重要。いきなりインスリン投与だけでは不十分。'}}
+]},
+{id:'insomnia',ph:1,icon:'🌙',title:'不眠とせん妄（病棟当直）',sub:'Ch.11 薬で眠らせる前に，必ず原因を探せ！',diff:1,
+outcome:'せん妄の早期認識と非薬物的介入',
+steps:[
+{t:'case',title:'症例：「患者が暴れている」夜間のコール',
+con:'78歳男性，大腸癌術後2日目．夜間に突然「家に帰る」と叫び，点滴を抜こうとしている．昼間は問題なかった．バイタル：体温38.1°C，血圧148/88，脈拍96，SpO₂95%．カテーテル留置中',
+note:'CAM（Confusion Assessment Method）：①急性発症・変動性②注意障害③①②+③思考散漫または④意識レベル変容→せん妄'},
+{t:'multi',title:'Q1. このせん妄患者で最初に行うべき評価は？（複数選択）',
+ch:[{l:'A',x:'Bedside血糖測定（低血糖の除外）'},{l:'B',x:'SpO₂・バイタル確認（低酸素・感染の除外）'},{l:'C',x:'薬剤確認（オピオイド・ベンゾジアゼピン・抗コリン薬）'},{l:'D',x:'まずハロペリドールを投与して落ち着かせる'}],
+cor:['A','B','C'],
+fb:{correct:'正解！せん妄の原因検索（AEIOU TIPS）が最優先。特に①低血糖②低酸素③薬剤性（オピオイド・BZP・抗コリン薬）④感染症（体温38.1°C→UTI疑い）を確認。原因を取り除かずに薬物だけで鎮静（D）すると転帰が悪化する。',partial:'A・B・Cが正解。D（即ハロペリドール）は原因を探さずに使うのは誤り。',wrong:'A・B・Cが正解。D（即薬物鎮静）は原因を探さずに行うのは誤りです。'}},
+{t:'single',title:'Q2. せん妄の非薬物的介入として最も重要なのは？',
+ch:[{l:'A',x:'部屋を暗くして静かにする（刺激を減らす）'},{l:'B',x:'見当識の提供（時計・カレンダー・家族写真）・早期離床・昼夜リズムの維持'},{l:'C',x:'身体拘束を行い安全を確保する'},{l:'D',x:'部屋を変えて環境を整える'}],
+cor:'B',
+fb:{correct:'正解！せん妄の非薬物的介入（ABCDEF bundle）：A（覚醒）B（呼吸）C（投薬見直し）D（せん妄評価）E（早期離床）F（家族参加）。見当識の提供（時計・カレンダー・家族）・早期離床・昼夜リズム維持が最重要。身体拘束（C）は褥瘡・廃用を招き最後の手段。',wrong:'正解はB。せん妄の非薬物的介入：見当識提供・早期離床・昼夜リズム維持が最重要。'}}
+]},
+{id:'allergy_ward',ph:1,icon:'🐝',title:'病棟で経験するアレルギー',sub:'Ch.12 アドレナリンを躊躇せずに使え！',diff:2,
+outcome:'アナフィラキシーの即時対応',
+steps:[
+{t:'case',title:'症例：抗菌薬点滴中に「体がかゆい」と訴える',
+con:'45歳女性，蜂窩織炎でセフトリアキソン点滴中（5分経過）．突然「全身がかゆい」「息が苦しい」と訴え，全身に蕁麻疹が出現．バイタル：血圧84/56 mmHg，脈拍124，SpO₂90%，呼吸困難あり',
+note:'アナフィラキシーの診断基準（3つのうち1つを満たす）：①皮膚/粘膜症状＋呼吸症状or循環症状②アレルゲン暴露後の低血圧or呼吸症状③既知アレルゲン暴露後の2臓器以上の症状'},
+{t:'single',title:'Q1. まず行うべき最重要の処置は？',
+ch:[{l:'A',x:'抗ヒスタミン薬（ポララミン）を静注する'},{l:'B',x:'アドレナリン0.3〜0.5mgを大腿前外側に筋注する（第一選択）'},{l:'C',x:'ステロイド（ソル・メドロール）を静注する'},{l:'D',x:'まず点滴を止めて様子を見る'}],
+cor:'B',
+fb:{correct:'正解！アナフィラキシーの第一選択はアドレナリン筋注（アナフィラキシーガイドライン2022）。成人：0.3〜0.5mg（0.3〜0.5mL）を大腿前外側に筋注。①まず点滴を止める②アドレナリン筋注③ショック体位④酸素投与⑤静脈路確保（生食急速投与）。抗ヒスタミン薬・ステロイドは補助的で第一選択ではない。',wrong:'正解はB。アナフィラキシーの第一選択はアドレナリン筋注。抗ヒスタミン薬（A）を先に使うのは治療の遅れになる最大の誤り。'}},
+{t:'multi',title:'Q2. アドレナリン投与後の管理として正しいのは？（複数選択）',
+ch:[{l:'A',x:'二相性アナフィラキシーのリスクがあるため4〜6時間は経過観察'},{l:'B',x:'症状が改善したら即帰宅可能（入院不要）'},{l:'C',x:'ステロイド・抗ヒスタミン薬を追加投与'},{l:'D',x:'退院時にエピペン®の処方・自己注射指導を検討'}],
+cor:['A','C','D'],
+fb:{correct:'正解！A・C・Dが正解。アドレナリン投与後も4〜6時間の経過観察が必要（二相性アナフィラキシー：1〜48時間後に再燃，6〜12時間以内が多い）。Bは誤り：即帰宅は二相性アナフィラキシーのリスクがある。エピペン®処方＋自己注射指導は退院時に必須。',partial:'A・C・Dが正解。B（即帰宅）は二相性アナフィラキシーのリスクがあり誤りです。',wrong:'A・C・Dが正解。B（症状改善後の即帰宅）は危険です。'}}
+]},
+// ================================================================
+// II. 入院編
+// ================================================================
+{id:'pneumonia_adm',ph:2,icon:'🌬️',title:'肺炎（入院編）',sub:'Ch.14 重症度を判定し，適切な場で治療せよ！',diff:2,
+outcome:'市中肺炎の重症度判定と抗菌薬選択',
+steps:[
+{t:'case',title:'症例：発熱・咳嗽で救急外来を受診した70歳男性',
+con:'70歳男性，喫煙歴あり（COPD既往）．3日前から発熱39°C・膿性痰・呼吸困難．バイタル：血圧104/68 mmHg，脈拍100，呼吸数22，SpO₂90%（室内気），体温39.2°C，意識清明．聴診：右下肺野でcrackles．X線：右下肺野浸潤影',
+note:'市中肺炎の重症度判定：A-DROPシステム（0点：外来，1〜2点：入院，3点以上：重症入院，4〜5点：ICU検討）'},
+{t:'single',title:'Q1. A-DROPスコアを計算せよ',
+ch:[{l:'A',x:'A(+1, 70歳)・D(要確認)・R(+1, SpO₂90%)・O(0, 清明)・P(0, BP104)→最低2点で入院適応'},{l:'B',x:'A-DROPは外来専用のスコアリングシステム'},{l:'C',x:'SpO₂が90%なので自動的にICU入院が必要'},{l:'D',x:'年齢は70歳未満でないとカウントされない'}],
+cor:'A',
+fb:{correct:'正解！A-DROPシステム：A（Age：男≥70/女≥75歳 +1）・D（Dehydration：BUN≥21mg/dL +1）・R（Respiration：SpO₂≤90% +1）・O（Orientation：意識障害 +1）・P（blood Pressure：収縮期≤90mmHg +1）。本症例は最低でもA(+1)R(+1)=2点→入院適応。D（BUN）を確認してさらに評価が必要。',wrong:'正解はA。A-DROPスコアで本症例は少なくとも2点→入院適応。'}},
+{t:'multi',title:'Q2. 市中肺炎の入院例（中等症）に選択する抗菌薬は？（複数選択）',
+ch:[{l:'A',x:'β-ラクタム系（CTRX 1〜2g IV）で肺炎球菌・インフルエンザ菌をカバー'},{l:'B',x:'マクロライド系（アジスロマイシン 500mg IV）でマイコプラズマ・クラミジアをカバー'},{l:'C',x:'バンコマイシン（MRSA肺炎疑いがない限り不要）'},{l:'D',x:'アミノグリコシド系（アミカシン）を市中肺炎に第一選択で使用する'}],
+cor:['A','B'],
+fb:{correct:'正解！中等症市中肺炎の標準治療：CTRX（β-ラクタム系）＋アジスロマイシン（マクロライド系）の2剤併用。マクロライド系で非定型病原体（マイコプラズマ・クラミジア・レジオネラ）をカバーする。バンコマイシン（C）はMRSA肺炎への適応。アミノグリコシド（D）は市中肺炎の第一選択ではない。',partial:'A・Bが正解（β-ラクタム＋マクロライドの2剤）。C・Dは市中肺炎の標準治療ではない。',wrong:'A・Bが正解。市中肺炎中等症の標準治療はβ-ラクタム＋マクロライドの2剤。'}},
+{t:'single',title:'Q3. レジオネラ肺炎を疑うべき状況は？',
+ch:[{l:'A',x:'ホテル・旅行・温泉・入浴施設・エアコン使用歴があり，通常の抗菌薬に反応しない重症肺炎'},{l:'B',x:'冬季に多く，子供に多い（インフルエンザ様）'},{l:'C',x:'土壌・動物（鳥類）との接触歴がある'},{l:'D',x:'HIV陽性でCD4低値の免疫不全状態'}],
+cor:'A',
+fb:{correct:'正解！レジオネラ肺炎の疫学：水系感染（冷却水・温泉・噴霧器）。重症化しやすく，β-ラクタムは無効→ニューキノロン（レボフロキサシン）またはマクロライドが必須。尿中レジオネラ抗原検査で迅速診断可能。B（冬季・小児）はインフルエンザ，C（土壌・鳥）はクリプトコックス/クラミジア鳥類型，D（HIV・CD4低値）はニューモシスティス肺炎。',wrong:'正解はA。ホテル・温泉・エアコン歴+重症肺炎→レジオネラを疑いニューキノロンを追加。'}}
+]},
+{id:'uti_adm',ph:2,icon:'🫘',title:'尿路感染症（UTI）',sub:'Ch.15 尿路閉塞を見逃すな！適切な抗菌薬を選択せよ',diff:1,
+outcome:'UTIの重症度評価・抗菌薬選択・尿路閉塞の除外',
+steps:[
+{t:'case',title:'症例：発熱・腰痛で来院した30歳女性',
+con:'30歳女性，3日前から頻尿・排尿時痛あり，昨日から右腰背部痛と38.8°Cの発熱が出現．バイタル：血圧96/60 mmHg，脈拍108，呼吸数22，SpO₂97%，体温38.8°C．右肋骨脊柱角（CVA）叩打痛（++）',
+note:'UTIの分類：単純性（若年女性・尿路異常なし）vs 複雑性（男性・妊婦・尿路異常・カテーテル・免疫不全・糖尿病）'},
+{t:'single',title:'Q1. まず確認すべき最重要の検査は？',
+ch:[{l:'A',x:'腹部エコーまたはCT（水腎症・尿路閉塞の除外）'},{l:'B',x:'尿培養のみ施行して外来でフォロー'},{l:'C',x:'性感染症（クラミジア）のスクリーニング'},{l:'D',x:'膀胱鏡検査（膀胱内視鏡）'}],
+cor:'A',
+fb:{correct:'正解！腎盂腎炎で尿路閉塞（水腎症）が疑われる場合，腹部エコーまたはCTが最優先。尿路閉塞＋感染=緊急ドレナージ（腎瘻or尿管ステント）の適応。閉塞があると抗菌薬だけでは感染を制御できず，敗血症→死亡のリスク。qSOFA2点→入院・広域抗菌薬が必要。',wrong:'正解はA。腎盂腎炎では尿路閉塞（水腎症）の除外が最優先。'}},
+{t:'multi',title:'Q2. 尿路感染症の抗菌薬選択で正しいのは？（複数選択）',
+ch:[{l:'A',x:'単純性膀胱炎：ST合剤またはニューキノロン 3〜5日間（短期間治療で可）'},{l:'B',x:'腎盂腎炎（軽症・外来）：レボフロキサシン 500mg 1回/日 7〜14日間'},{l:'C',x:'腎盂腎炎（重症・入院）：CTRX 1〜2g IV 1〜2回/日'},{l:'D',x:'UTIは全てバンコマイシンで治療する'}],
+cor:['A','B','C'],
+fb:{correct:'正解！UTIの抗菌薬：単純性膀胱炎→ST合剤orニューキノロン3〜5日。腎盂腎炎外来→レボフロキサシン or CTRX 7〜14日。腎盂腎炎入院・重症→CTRX or TAZ/PIPC（ESBLリスクある場合）。バンコマイシン（D）はグラム陰性桿菌（E.coli）には無効→UTIの適応なし。',partial:'A・B・Cが正解。D（バンコマイシン）はグラム陰性桿菌に無効でUTIには使用しない。',wrong:'A・B・Cが正解。D（バンコマイシン）はUTIには使用しない。'}}
+]},
+{id:'aki',ph:2,icon:'🫘',title:'急性腎障害（AKI）',sub:'Ch.21 原因を分類し，腎毒性薬剤を中止せよ！',diff:2,
+outcome:'AKIの診断・分類・緊急対応',
+steps:[
+{t:'case',title:'症例：Cr上昇を認めた入院患者',
+con:'72歳男性，肺炎入院中．入院時Cr 1.1 mg/dL→3日後に2.8 mg/dLに上昇．バイタルは安定．尿量：600mL/日（前日比70%減）．内服：NSAIDs（ロキソニン）・ACE阻害薬（ペリンドプリル）・ゲンタマイシン投与中',
+note:'AKIの分類：Pre-renal（腎前性：脱水・血圧低下・腎血流低下）vs Renal（腎性：尿細管壊死・糸球体腎炎）vs Post-renal（腎後性：尿路閉塞）'},
+{t:'multi',title:'Q1. この患者でAKIの原因となっているものは？（複数選択）',
+ch:[{l:'A',x:'NSAIDs（腎血流を低下させるCOX阻害作用）'},{l:'B',x:'ACE阻害薬（糸球体輸出細動脈を拡張→腎灌流圧低下）'},{l:'C',x:'ゲンタマイシン（アミノグリコシド系：直接腎毒性）'},{l:'D',x:'肺炎そのもの（直接腎毒性はない）'}],
+cor:['A','B','C'],
+fb:{correct:'正解！本症例のAKI原因はA+B+C全て。①NSAIDs：COX阻害→プロスタグランジン減少→腎血流低下（特に腎前性AKIのリスクがある高齢者に多い）②ACE阻害薬：輸出細動脈拡張→GFR低下（脱水・腎血流低下状態では特に危険）③ゲンタマイシン：直接尿細管毒性（トラフ値管理が必須）。D（肺炎）は敗血症が進行した場合にAKIを引き起こすが，この症例では薬剤性が主因。',partial:'A・B・Cが正解。D（肺炎）は直接的な腎毒性はない（敗血症経由でAKIを起こすことはある）。',wrong:'A・B・Cが正解。全て腎毒性薬剤として有名で，直ちに中止または用量調整が必要。'}},
+{t:'single',title:'Q2. 高カリウム血症（K 6.8 mEq/L）を伴うAKIで最初に行うことは？',
+ch:[{l:'A',x:'グルコン酸カルシウム（カルチコール®）1〜2アンプルをゆっくり静注（心保護）'},{l:'B',x:'透析を直ちに開始する'},{l:'C',x:'食事制限のみで経過観察'},{l:'D',x:'カリウム製剤を投与してバランスをとる'}],
+cor:'A',
+fb:{correct:'正解！重症高K血症（≥6.5 mEq/L）でまず行うのは心筋保護。グルコン酸カルシウム（10mL）IVで心膜電位を安定化（K値は下がらないが心臓への影響を一時的にブロック）。次いで①β₂刺激薬（サルブタモール吸入）②ブドウ糖＋インスリン（Kを細胞内に移動）③カリウム排泄（フロセミド・陽イオン交換樹脂・透析）。',wrong:'正解はA。重症高K血症の第一選択はグルコン酸カルシウムで心保護を行ってから除去療法へ。'}}
+]},
+{id:'hyponatremia',ph:2,icon:'🧪',title:'低ナトリウム血症',sub:'Ch.22 急性か慢性かを見極めろ！急速補正は禁忌！',diff:3,
+outcome:'低Na血症の分類と安全な補正',
+steps:[
+{t:'case',title:'症例：Na 116 mEq/Lの入院患者',
+con:'68歳男性，SIADH（抗精神病薬による）．血清Na 116 mEq/L，意識清明，嘔気あり，バイタル安定．3日前のNa 132 mEq/Lから徐々に低下している（慢性経過）',
+note:'低Na血症の補正速度の原則：急性（<48時間）→1〜2mEq/L/時まで可。慢性（≥48時間または不明）→10〜12mEq/L/日以内（「浸透圧性脱髄症候群（ODS）」予防）'},
+{t:'single',title:'Q1. 慢性低Na血症の補正で絶対に守るべき原則は？',
+ch:[{l:'A',x:'24時間で20 mEq/L以上を目標に急速補正する'},{l:'B',x:'1日の補正量は10〜12 mEq/L以内（最大）として緩徐に補正する'},{l:'C',x:'高張食塩水を急速投与して症状を改善させる'},{l:'D',x:'Naが正常になるまで飲水を完全禁止する'}],
+cor:'B',
+fb:{correct:'正解！慢性低Na血症の急速補正は浸透圧性脱髄症候群（ODS）を引き起こし，橋中心髄鞘崩壊症（CPM）→四肢麻痺・嚥下障害・昏睡・死亡の可能性。補正目標：1日10〜12 mEq/L以内（高リスク例は8 mEq/L/日以内）。急性症状（けいれん・昏睡）があれば1〜2 mEq/L/時の補正も許容。',wrong:'正解はB。慢性低Na血症の急速補正はODS（橋中心髄鞘崩壊症）を引き起こし致死的になりうる。'}},
+{t:'multi',title:'Q2. SIADHの診断基準として正しいのは？（複数選択）',
+ch:[{l:'A',x:'血清Naが低下しているにもかかわらず尿が希釈されない（尿浸透圧>100 mOsm/kg）'},{l:'B',x:'臨床的に正常〜体液過剰（浮腫なし）'},{l:'C',x:'原因薬剤なし・副腎・甲状腺・腎機能正常'},{l:'D',x:'血清尿酸値が高値（高尿酸血症）'}],
+cor:['A','B','C'],
+fb:{correct:'正解！SIADHの診断基準：①低Na血症（<135）②血清低浸透圧（<275 mOsm/kg）③尿浸透圧>100（ADH過剰分泌で尿濃縮が続く）④尿Na>30（正常な腎機能の証拠）⑤体液量正常〜軽度過剰（浮腫なし）⑥甲状腺・副腎・腎機能正常。血清尿酸値（D）は低値（SIADHでは尿酸排泄↑）。',partial:'A・B・Cが正解。D（高尿酸血症）はSIADHとは逆で，SIADHでは低尿酸血症になる。',wrong:'A・B・Cが正解。D（高尿酸血症）はSIADHでは起こらない（むしろ低尿酸血症）。'}}
+]},
+{id:'hyperkalemia',ph:2,icon:'🧪',title:'高カリウム血症',sub:'Ch.23 心電図をまず確認せよ！緊急治療の手順を覚えろ！',diff:2,
+outcome:'高K血症の緊急対応の手順を習得',
+steps:[
+{t:'case',title:'症例：透析患者の血液検査結果',
+con:'65歳男性，慢性腎不全で週3回透析中．最終透析から2日後に外来受診．採血結果：K 7.2 mEq/L，Cr 8.5 mg/dL（baseline）．心電図：テント状T波，PR延長あり',
+note:'高K血症の心電図変化（K値の目安）：テント状T波(5.5〜)→PR延長・P波消失(6.0〜)→QRS幅拡大(7.0〜)→サイン波(8.0〜)→心室細動・心静止(>8.0)'},
+{t:'multi',title:'Q1. K 7.2 mEq/L+心電図変化への緊急対応は？（複数選択）',
+ch:[{l:'A',x:'グルコン酸カルシウム 10mL 静注（心膜安定化→即時効果）'},{l:'B',x:'ブドウ糖＋インスリン（血糖モニタリング下でKを細胞内へ）'},{l:'C',x:'β₂刺激薬（サルブタモール吸入）：Kを細胞内へ移動（+β2作用）'},{l:'D',x:'カリウムが正常化するまで何もしないで待つ'}],
+cor:['A','B','C'],
+fb:{correct:'正解！高K血症の緊急3ステップ：①心保護（グルコン酸カルシウム）→②Kを細胞内へ移動（インスリン＋ブドウ糖・β₂刺激薬）→③K排泄（フロセミド・陽イオン交換樹脂・透析）。本症例は心電図変化あり→緊急。D（何もしない）は心室細動→死亡のリスク。',partial:'A・B・Cが正解（高K血症の緊急治療の3本柱）。Dは重症高K血症を放置することになり危険。',wrong:'A・B・Cが正解。D（待機）は致死的不整脈を招く危険があります。'}},
+{t:'single',title:'Q2. 高K血症の原因として「偽性高K血症」を疑うべき状況は？',
+ch:[{l:'A',x:'採血時の溶血（採血困難・強い吸引）や長時間の放置'},{l:'B',x:'透析患者で最終透析から48時間以上経過'},{l:'C',x:'副腎不全（アルドステロン不足）'},{l:'D',x:'アシドーシス（細胞外へのK移動）'}],
+cor:'A',
+fb:{correct:'正解！偽性高K血症（artifactual hyperkalemia）：採血時の溶血（赤血球からKが漏出）→実際より高いK値が測定される。疑う状況：採血困難・強い吸引・長時間放置・白血球増多症・血小板増多症。対処：再採血（スムーズに採血→すぐに検査）。症状がないのに高K→偽性を疑う。',wrong:'正解はA。採血時の溶血→赤血球内のKが漏出して偽性高K血症を起こす。'}}
+]},
+// ================================================================
+// III. 病棟管理編
+// ================================================================
+{id:'blood',ph:3,icon:'🩸',title:'血算・貧血',sub:'Ch.30 MCV・Retで貧血を鑑別せよ！',diff:2,
+outcome:'貧血の系統的鑑別診断',
+steps:[
+{t:'case',title:'症例：Hb 7.8 g/dLを指摘された患者',
+con:'55歳女性，健診でHb 7.8 g/dL，MCV 72 fL（小球性低色素性貧血），血清鉄 低値，TIBC 高値，フェリチン 5 ng/mL（低値）',
+note:'貧血の鑑別フローチャート：MCV（低値<80→小球性，正常80〜100→正球性，高値>100→大球性）＋Reticulocyte（低値→産生↓，高値→破壊↑ or 失血）'},
+{t:'single',title:'Q1. この患者の貧血のタイプと最も考えられる診断は？',
+ch:[{l:'A',x:'大球性貧血→ビタミンB12欠乏'},{l:'B',x:'小球性低色素性貧血＋フェリチン低値→鉄欠乏性貧血'},{l:'C',x:'正球性貧血→腎性貧血'},{l:'D',x:'溶血性貧血（間接ビリルビン↑・LDH↑）'}],
+cor:'B',
+fb:{correct:'正解！MCV 72（小球性）＋血清鉄低値・TIBC高値・フェリチン低値は鉄欠乏性貧血の典型像。次のステップは「原因を探す」：消化管出血（大腸癌・潰瘍）・婦人科疾患（子宮筋腫・月経過多）・鉄摂取不足。治療：経口鉄剤（フェルム®200mg 1回/日）or 静注鉄（フェインジェクト®）。',wrong:'正解はB。小球性貧血+フェリチン低値→鉄欠乏性貧血の典型パターン。'}},
+{t:'multi',title:'Q2. 貧血で輸血適応となる状況は？（複数選択）',
+ch:[{l:'A',x:'活動性出血でバイタルが不安定（出血量が多い）'},{l:'B',x:'Hb<7 g/dL（制限的輸血戦略：ICU患者）'},{l:'C',x:'Hb<8 g/dL（冠動脈疾患・高齢者・症状がある場合）'},{l:'D',x:'Hbが12 g/dLから11 g/dLに低下したが無症状'}],
+cor:['A','B','C'],
+fb:{correct:'正解！輸血の適応：①バイタル不安定な活動性出血②Hb<7（ICU・安定患者）③Hb<8（冠動脈疾患・高齢者・症状あり）。輸血は臓器移植と同じく侵襲的治療→「不必要な輸血は絶対に避ける」。D（Hb11→症状なし）は輸血適応なし（生活習慣・食事改善・鉄剤等が先）。',partial:'A・B・Cが正解。D（Hb11g/dL・無症状）は輸血適応なし。',wrong:'A・B・Cが正解。D（Hb11で無症状）は輸血適応なし。'}}
+]},
+{id:'fluid',ph:3,icon:'💧',title:'輸液（病棟管理）',sub:'Ch.31 輸液の目的を明確にし，必要量を計算せよ！',diff:2,
+outcome:'適切な輸液選択と必要量の計算',
+steps:[
+{t:'case',title:'症例：術後の輸液管理',
+con:'50歳男性，大腸癌腹腔鏡下切除術後1日目．絶食中，体重60kg．尿量が減少している（200mL/8時間）．バイタル：血圧110/70，脈拍88，体温37.1°C，SpO₂98%．皮膚：ツルゴール低下あり',
+note:'術後輸液の目標：①生理的必要量（30〜35mL/kg/日）＋②不感蒸泄③ドレーン排液量の補充'},
+{t:'single',title:'Q1. 術後輸液として第一選択となる輸液の種類は？',
+ch:[{l:'A',x:'5%ブドウ糖液（低張液：血管内容量の維持に不向き）'},{l:'B',x:'細胞外液補充液（生理食塩水・乳酸リンゲル液）：血管内容量を保つ'},{l:'C',x:'高張食塩水（3%NaCl）を全ての術後患者に使用する'},{l:'D',x:'輸液は不要。経口摂取を翌日から開始すれば十分'}],
+cor:'B',
+fb:{correct:'正解！術後輸液の基本は細胞外液補充液（乳酸リンゲル液 or 生食）。5%ブドウ糖（A）は低張液で血管内容量の維持には適さず，低Na血症を引き起こす。術後は消化管から水分吸収ができないため，静脈からの細胞外液補充が必要。ただし必要最低限の量にとどめ，過剰輸液（術後肺水腫・腸閉塞延長）を避ける。',wrong:'正解はB。術後輸液の基本は細胞外液（乳酸リンゲルまたは生食）。5%ブドウ糖（A）は低張液で血管内容量の維持に使用しない。'}},
+{t:'multi',title:'Q2. 「輸液反応性」を評価する指標として正しいのは？（複数選択）',
+ch:[{l:'A',x:'受動的下肢挙上（PLR）：下肢を挙上して血圧・心拍出量が増加するか確認'},{l:'B',x:'PPV（脈圧変動）>13%（人工呼吸中）：輸液反応性あり'},{l:'C',x:'中心静脈圧（CVP）：CVP<8なら必ず輸液反応性あり'},{l:'D',x:'輸液チャレンジ（250〜500mLを急速投与して反応を見る）'}],
+cor:['A','B','D'],
+fb:{correct:'正解！輸液反応性の評価：①PLR（受動的下肢挙上）：最も簡便で再現性が高い②PPV/SVV（人工呼吸中）：換気による血流変動③輸液チャレンジ：500mL急速投与後の反応確認。CVP（C）：昔はCVP<8=輸液反応性ありとされたが，現在は単一の指標としては使用しない（ガイドラインで推奨されない）。',partial:'A・B・Dが正解。C（CVP単独での評価）は現在では推奨されていません。',wrong:'A・B・Dが正解。C（CVP単独評価）は現在は有用でないとされています。'}}
+]},
+{id:'abg',ph:3,icon:'🔬',title:'動脈血液ガス検査',sub:'Ch.36 7ステップで確実に解釈せよ！',diff:3,
+outcome:'ABGの体系的解釈と臨床判断への応用',
+steps:[
+{t:'case',title:'症例：呼吸困難の患者の血液ガスデータ',
+con:'60歳男性，COPD患者が急性増悪．動脈血液ガス（室内気）：pH 7.25，PaCO₂ 72 mmHg，PaO₂ 48 mmHg，HCO₃⁻ 32 mEq/L，BE +6',
+note:'ABGの解釈7ステップ：①pH（酸性/アルカリ性）→②プライマリー障害（CO₂ or HCO₃⁻）→③代償の確認→④A-a gradient→⑤酸塩基平衡→⑥酸素化→⑦臨床判断'},
+{t:'single',title:'Q1. このABGの解釈として正しいのは？',
+ch:[{l:'A',x:'代謝性アシドーシス（pH↓・HCO₃⁻↓）'},{l:'B',x:'呼吸性アシドーシス（pH↓・PaCO₂↑）＋代謝性代償（HCO₃⁻↑）'},{l:'C',x:'代謝性アルカローシス（pH↑・HCO₃⁻↑）'},{l:'D',x:'混合性酸塩基障害（呼吸性アルカローシス＋代謝性アシドーシス）'}],
+cor:'B',
+fb:{correct:'正解！pH 7.25（酸性）→アシドーシス。PaCO₂ 72（↑）→呼吸性アシドーシスがプライマリー。HCO₃⁻ 32（↑）→代謝性代償あり（慢性呼吸性アシドーシスでは1mEq/L↑HCO₃⁻ per 1mmHg↑PaCO₂の3.5倍）。急性呼吸性アシドーシスの代償：HCO₃⁻ +1 per PaCO₂ +10。本症例：慢性のCOPD急性増悪（慢性＋急性増悪）。',wrong:'正解はB。pH低下+PaCO₂上昇=呼吸性アシドーシス。HCO₃⁻上昇は代謝性代償。'}},
+{t:'multi',title:'Q2. このCOPD患者への対応として正しいのは？（複数選択）',
+ch:[{l:'A',x:'低流量酸素投与（目標SpO₂ 88〜92%）'},{l:'B',x:'NPPV（非侵襲的陽圧換気）の開始（pH<7.35＋PaCO₂上昇の適応）'},{l:'C',x:'高流量酸素（10L/分マスク）でSpO₂を95%以上に'},{l:'D',x:'気管支拡張薬（SABA+SAMA）ネブライザー吸入'}],
+cor:['A','B','D'],
+fb:{correct:'正解！COPDへの対応：①低流量酸素（目標SpO₂ 88〜92%：高流量はCO₂ナルコーシスのリスク）②NPPV（pH<7.35＋CO₂貯留→死亡率・挿管率を下げる）③SABA＋SAMA ネブライザー（気管支拡張）④ステロイド（メチルプレドニゾロン 40mg IV）⑤抗菌薬（感染増悪の場合）。C（高流量酸素）は禁忌。',partial:'A・B・Dが正解。C（高流量酸素）はCO₂ナルコーシスを引き起こす危険があります。',wrong:'A・B・Dが正解。C（高流量酸素）はCOPDでは禁忌。CO₂ナルコーシスを起こします。'}}
+]},
+{id:'steroids',ph:3,icon:'💊',title:'ステロイドの使用法',sub:'Ch.37 適応・用量・副作用・離脱を理解せよ！',diff:2,
+outcome:'ステロイドの適切な使用と副作用管理',
+steps:[
+{t:'case',title:'症例：長期ステロイド投与患者の管理',
+con:'60歳女性，関節リウマチでプレドニゾロン15mg/日を3年間内服中．風邪のため2日前から食欲不振・発熱38°C．意識は清明だが倦怠感が強く，血圧86/54 mmHg，脈拍104',
+note:'副腎皮質ステロイドを3mg/日相当を3週間以上使用→HPA軸抑制→ストレス下でステロイド追加が必要（Sick day rule）'},
+{t:'single',title:'Q1. この患者で急性副腎不全（副腎クリーゼ）を疑うべき理由と対応は？',
+ch:[{l:'A',x:'感染のため一時的にステロイドを中止すれば改善する'},{l:'B',x:'長期ステロイド使用中の発熱・低血圧→副腎クリーゼを疑いヒドロコルチゾン100mg IVを緊急投与'},{l:'C',x:'バイタル安定化を待ってから内科に相談する'},{l:'D',x:'ステロイドは急に増量しても意味がない'}],
+cor:'B',
+fb:{correct:'正解！長期ステロイド（>5mg/日を3週間以上）→HPA軸抑制→発熱などのストレスで必要なコルチゾールを自力産生できない→副腎クリーゼ（低血圧・倦怠感・嘔気・発熱）。緊急治療：ヒドロコルチゾン100mg IV→その後50〜100mg 6〜8時間毎に。同時に輸液（生食）急速投与。',wrong:'正解はB。長期ステロイド使用中の発熱＋低血圧→副腎クリーゼを疑いヒドロコルチゾン緊急投与。'}},
+{t:'multi',title:'Q2. 長期ステロイド使用患者で注意すべき副作用は？（複数選択）',
+ch:[{l:'A',x:'骨粗鬆症（必ずビタミンD・カルシウム，必要に応じてビスホスホネート）'},{l:'B',x:'血糖上昇（糖尿病の悪化・ステロイド糖尿病の新規発症）'},{l:'C',x:'消化性潰瘍（PPI予防投与が推奨，特にNSAIDs併用時）'},{l:'D',x:'全員に白内障・緑内障が必発（眼科受診は不要）'}],
+cor:['A','B','C'],
+fb:{correct:'正解！長期ステロイドの主要副作用：①骨粗鬆症（Ca・VitD補充＋必要に応じBisphosphonate）②血糖上昇（定期的血糖モニタリング）③消化性潰瘍（PPI予防投与）④免疫抑制（感染リスク↑）⑤精神症状⑥体重増加・満月様顔貌。D（白内障・緑内障）は副作用として起こりうるが「全員に必発」ではなく，定期的な眼科受診が推奨（眼科受診は必要）。',partial:'A・B・Cが正解。D（全員に必発・眼科不要）は誤り。定期的眼科受診が推奨されます。',wrong:'A・B・Cが正解。D（全員必発・眼科不要）は誤り。'}}
+]},
+{id:'antibiotics',ph:3,icon:'💊',title:'抗菌薬の使い方（総論）',sub:'Ch.38 適正使用の原則：De-escalation・PK/PDを理解せよ！',diff:3,
+outcome:'抗菌薬の適正使用と de-escalation',
+steps:[
+{t:'case',title:'症例：肺炎で入院した患者の抗菌薬管理',
+con:'65歳男性，市中肺炎でCTRX＋アジスロマイシンで治療開始．入院3日後：喀痰培養から肺炎球菌（ペニシリン感受性）が検出された．体温37.2°C，白血球数正常化，SpO₂96%（室内気）で良好な経過',
+note:'抗菌薬スチュワードシップ（AMS）：適切な抗菌薬を，適切な用量で，適切な期間，適切な患者に投与する→耐性菌の出現を防ぐ'},
+{t:'single',title:'Q1. この状況での最適な抗菌薬の対応は？',
+ch:[{l:'A',x:'培養が出たので広域のまま継続（安全のため変更しない）'},{l:'B',x:'感受性結果に基づきde-escalation（CTRX→アモキシシリン経口へ変更）'},{l:'C',x:'追加で抗MRSA薬（バンコマイシン）を加える'},{l:'D',x:'培養が出たら必ず2週間は同じ抗菌薬を継続する'}],
+cor:'B',
+fb:{correct:'正解！De-escalation（de-escalation）が抗菌薬スチュワードシップの原則。培養感受性が判明したら，最も狭域で有効な抗菌薬に変更する。肺炎球菌（ペニシリン感受性）→アモキシシリン経口（または CTRX 継続でも可）。広域抗菌薬を不必要に継続すると耐性菌のリスクが高まる。',wrong:'正解はB。培養感受性が判明したらde-escalation（狭域化）が抗菌薬スチュワードシップの原則。'}},
+{t:'multi',title:'Q2. 抗菌薬のPK/PD理論に基づく投与方法として正しいのは？（複数選択）',
+ch:[{l:'A',x:'βラクタム系（時間依存性）：MIC以上の濃度が維持される時間（%TAM）が重要→1日複数回分割投与が効果的'},{l:'B',x:'アミノグリコシド系（濃度依存性）：最大血中濃度（Cmax）/MICが重要→1日1回大量投与が効果的'},{l:'C',x:'バンコマイシン（時間依存性）：AUC/MICが重要→TDMで投与量を個別化'},{l:'D',x:'全ての抗菌薬は1日3回に分けて投与するのが最も効果的'}],
+cor:['A','B','C'],
+fb:{correct:'正解！抗菌薬のPK/PD：①時間依存性（βラクタム・バンコマイシン）：MIC以上の濃度を維持することが重要→分割投与or持続投与②濃度依存性（アミノグリコシド・キノロン・メトロニダゾール）：Cmaxが重要→1日1回大量投与③AUC依存性（バンコマイシン）：AUC/MICを目標に。D（全ての抗菌薬を1日3回）は誤り→PK/PD理論に反する。',partial:'A・B・Cが正解。D（全て1日3回）は誤りで，PK/PD理論に基づいた投与方法が重要。',wrong:'A・B・Cが正解。D（全て1日3回）は誤り。抗菌薬の種類によってPK/PDが異なる。'}}
+]},
+{id:'antibiotics_adv',ph:3,icon:'🧬',title:'抗菌薬の使い方（応用編）',sub:'Ch.39 耐性菌の適応・MRSAとESBLをマスターせよ！',diff:3,
+outcome:'難治性感染症・耐性菌への対応',
+steps:[
+{t:'case',title:'症例：血液培養でMRSAが検出された',
+con:'70歳男性，中心静脈カテーテル（CVC）留置中の患者で38.5°C熱発．血液培養（2セット）でMRSA（methicillin-resistant Staphylococcus aureus）が検出された',
+note:'MRSA血流感染の原則：①カテーテル抜去（感染源除去）②バンコマイシンまたはダプトマイシン③心内膜炎の除外（経食道心エコー）④14日間以上の治療'},
+{t:'multi',title:'Q1. MRSA血流感染の管理として正しいのは？（複数選択）',
+ch:[{l:'A',x:'バンコマイシン（TDMで用量調整：目標AUC/MIC 400〜600）が第一選択'},{l:'B',x:'CVCを直ちに抜去する（感染源除去が最重要）'},{l:'C',x:'心内膜炎除外のため経食道心エコーを施行'},{l:'D',x:'MRSAはメロペネム（カルバペネム）で治療する'}],
+cor:['A','B','C'],
+fb:{correct:'正解！MRSA血流感染の管理：①バンコマイシン（第一選択，TDMでAUC/MIC目標）②CVC抜去（感染源除去なしでは治癒しない）③心内膜炎除外（経食道心エコー）④治療期間14日間（心内膜炎あれば6週間）。D（メロペネム）はMRSAには無効（βラクタムは全て無効）。',partial:'A・B・Cが正解。D（メロペネム）はMRSAに無効。',wrong:'A・B・Cが正解。D（メロペネム）はMRSAには効果がない。'}},
+{t:'single',title:'Q2. ESBL産生菌（基質特異性拡張型βラクタマーゼ）に対して有効な抗菌薬は？',
+ch:[{l:'A',x:'セフトリアキソン（CTRX）：第3世代セフェム'},{l:'B',x:'ピペラシリン/タゾバクタム（TAZ/PIPC）：βラクタマーゼ阻害薬配合'},{l:'C',x:'メロペネム（カルバペネム）：ESBLに最も確実に有効'},{l:'D',x:'アモキシシリン（ペニシリン系）'}],
+cor:'C',
+fb:{correct:'正解！ESBL産生菌：第1〜4世代セフェム・ペニシリン系には耐性。カルバペネム系（メロペネム・イミペネム）が最も確実に有効。TAZ/PIPC（B）はin vitroでは有効に見えてもin vivoでは失敗することがある（inoculum effect）→重症例ではカルバペネムが推奨。ESBL産生E. coliはUTI・腎盂腎炎に多い。',wrong:'正解はC。ESBL産生菌への最も確実な治療はカルバペネム（メロペネム）。'}}
+]}
+];
+
+// ============================================================
+// STATE & STORAGE
+// ============================================================
+const STORE_KEY = 'naika_tessoku_state';
+function loadState(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'{}')}catch(e){return {}}}
+function saveState(s){try{localStorage.setItem(STORE_KEY,JSON.stringify(s))}catch(e){}}
+let appState=loadState();
+if(!appState.completed)appState.completed={};
+if(!appState.wrongQ)appState.wrongQ=[];
+if(!appState.unsureQ)appState.unsureQ=[];
+let curSc=null,curStep=0,curMultiSel=[],curTotalScore=0,curMaxScore=0;
+let curTab='all';
+
+// ============================================================
+// HOME
+// ============================================================
+function renderHome(){
+  document.getElementById('sim').style.display='none';
+  document.getElementById('review').style.display='none';
+  document.getElementById('home').style.display='block';
+  document.getElementById('header-title').textContent='内科レジデントの鉄則 第4版';
+  document.getElementById('header-score').textContent='';
+  document.getElementById('progress').style.width='0%';
+
+  const done=Object.keys(appState.completed).length;
+  const total=SC.length;
+  document.getElementById('home-prog-num').textContent=done+'/'+total;
+  document.getElementById('home-prog-text').textContent=
+    done===0?'まだシナリオを開始していません':
+    done===total?'🎉 全シナリオ完了！おめでとうございます！':
+    done+'件完了 — 残り'+(total-done)+'件';
+  const circ=138.2;
+  document.getElementById('home-ring').style.strokeDashoffset=circ-(done/total)*circ;
+
+  const reviewItems=dedupeReviewItems([...appState.wrongQ,...appState.unsureQ]);
+  const rb=document.getElementById('review-banner');
+  if(reviewItems.length>0){rb.style.display='flex';document.getElementById('review-count').textContent=reviewItems.length+'問';}
+  else rb.style.display='none';
+
+  renderScenarioList();
+}
+
+function switchTab(tab){
+  curTab=tab;
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{b.classList.toggle('active',['all','p1','p2','p3','done'][i]===tab)});
+  const lm={all:'全シナリオ — 病棟当直編 / 入院編 / 病棟管理編',p1:'I. 病棟当直編 — Ch.1〜13',p2:'II. 入院編 — Ch.14〜29',p3:'III. 病棟管理編 — Ch.30〜39',done:'完了済みシナリオ'};
+  document.getElementById('list-label').textContent=lm[tab];
+  renderScenarioList();
+}
+
+function renderScenarioList(){
+  const list=document.getElementById('scenario-list');
+  list.innerHTML='';
+  const filtered=SC.filter(sc=>{
+    if(curTab==='p1')return sc.ph===1;
+    if(curTab==='p2')return sc.ph===2;
+    if(curTab==='p3')return sc.ph===3;
+    if(curTab==='done')return appState.completed[sc.id];
+    return true;
+  });
+  if(filtered.length===0){list.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted);font-size:14px">該当するシナリオがありません</div>';return;}
+
+  let lastPh=0;
+  filtered.forEach(sc=>{
+    if(curTab==='all'&&sc.ph!==lastPh){
+      const div=document.createElement('div');
+      div.className='part-divider';
+      div.textContent={1:'I. 病棟当直編',2:'II. 入院編',3:'III. 病棟管理編'}[sc.ph];
+      list.appendChild(div);
+      lastPh=sc.ph;
+    }
+    const isDone=!!appState.completed[sc.id];
+    const hasReview=appState.wrongQ.some(q=>q.scId===sc.id)||appState.unsureQ.some(q=>q.scId===sc.id);
+    const diffLabel=['','入門','標準','応用'][sc.diff];
+    const diffClass=['','diff-1','diff-2','diff-3'][sc.diff];
+    const btn=document.createElement('button');
+    btn.className='scenario-card'+(isDone?' done':hasReview?' has-review':'');
+    btn.innerHTML=`<div class="sc-icon">${sc.icon}</div>
+      <div class="sc-body">
+        <div class="sc-title">${sc.title}</div>
+        <div class="sc-meta">${sc.sub}</div>
+        <div class="sc-tags">
+          <span class="sc-badge ${diffClass}">${diffLabel}</span>
+          ${hasReview?'<span class="sc-badge" style="background:var(--amber-l);color:var(--amber)">復習あり</span>':''}
+          ${isDone?'<span class="sc-badge" style="background:#A8DFDE;color:#004A50">完了</span>':''}
+        </div>
+      </div>
+      <span class="sc-arrow">${isDone?'✓':'›'}</span>`;
+    btn.onclick=()=>startScenario(sc.id);
+    list.appendChild(btn);
+  });
+}
+
+// ============================================================
+// SIMULATION
+// ============================================================
+function startScenario(id){
+  curSc=SC.find(s=>s.id===id);
+  curStep=0;curMultiSel=[];curTotalScore=0;curMaxScore=0;
+  document.getElementById('home').style.display='none';
+  document.getElementById('review').style.display='none';
+  document.getElementById('sim').style.display='block';
+  document.getElementById('header-title').textContent=curSc.title;
+  document.getElementById('header-score').textContent='';
+  document.getElementById('progress').style.width='5%';
+  renderStep(0);
+}
+
+function renderStep(idx){
+  const sc=curSc;
+  if(idx>=sc.steps.length){renderFinal();return;}
+  const step=sc.steps[idx];
+  const main=document.getElementById('sim-main');
+  main.innerHTML='';
+  const div=document.createElement('div');
+  div.className='screen active';
+
+  const total=sc.steps.length;
+  let dots='';
+  for(let i=0;i<total;i++){
+    let cls=i<idx?'done':i===idx?'cur':'';
+    dots+=`<div class="step-dot ${cls}"></div>`;
+  }
+  div.innerHTML=`<div class="step-indicator">${dots}<span class="step-lbl">STEP ${idx+1}/${total}</span></div>`;
+
+  if(step.t==='case'){
+    div.innerHTML+=buildCaseHTML(step);
+    const nb=document.createElement('button');
+    nb.className='next-btn';nb.style.display='block';
+    nb.textContent='問題に進む →';
+    nb.onclick=()=>{curStep++;renderStep(curStep);};
+    div.appendChild(nb);
+  } else if(step.t==='multi'){
+    div.innerHTML+=buildMultiHTML(step,idx);
+    div.querySelector('#next-'+idx).onclick=()=>{curStep++;renderStep(curStep);};
+    curMultiSel=[];
+  } else if(step.t==='single'){
+    div.innerHTML+=buildSingleHTML(step,idx);
+    div.querySelector('#next-'+idx).onclick=()=>{curStep++;renderStep(curStep);};
+  }
+
+  main.appendChild(div);
+  const pct=(idx/total)*90+5;
+  document.getElementById('progress').style.width=pct+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function buildCaseHTML(step){
+  const lines=step.con.split('\n').map(l=>`<div>${l}</div>`).join('');
+  const note=step.note?`<div class="tessoku-box">${step.note}</div>`:'';
+  return `<div class="case-card"><div class="case-hd"><div><div class="case-title">${step.title}</div></div></div><div class="case-body">${lines}</div></div>${note}`;
+}
+
+function buildMultiHTML(step,idx){
+  return `<div class="sec-lbl">${step.title}</div>
+    <p class="multi-hint">※正しいと思うものを全て選択してください</p>
+    <div class="choices" id="choices-${idx}">${step.ch.map(c=>`<button class="choice-btn" data-l="${c.l}" onclick="toggleMulti(this)"><span class="choice-letter">${c.l}</span><span>${c.x}</span></button>`).join('')}</div>
+    <button class="submit-btn" id="submit-${idx}" onclick="checkMulti(${idx})">回答する</button>
+    <div class="feedback" id="fb-${idx}"></div>
+    <button class="unsure-btn" id="unsure-${idx}" onclick="toggleUnsure(${idx})">🤔 自信がなかった問題としてマーク</button>
+    <button class="next-btn" id="next-${idx}">次へ →</button>`;
+}
+
+function buildSingleHTML(step,idx){
+  return `<div class="sec-lbl">${step.title}</div>
+    <div class="choices" id="choices-${idx}">${step.ch.map(c=>`<button class="choice-btn" data-l="${c.l}" onclick="selectSingle(this,${idx})"><span class="choice-letter">${c.l}</span><span>${c.x}</span></button>`).join('')}</div>
+    <div class="feedback" id="fb-${idx}"></div>
+    <button class="unsure-btn" id="unsure-${idx}" onclick="toggleUnsure(${idx})">🤔 自信がなかった問題としてマーク</button>
+    <button class="next-btn" id="next-${idx}">次へ →</button>`;
+}
+
+function toggleMulti(btn){
+  if(btn.disabled)return;
+  const l=btn.dataset.l;
+  const i=curMultiSel.indexOf(l);
+  if(i>-1){curMultiSel.splice(i,1);btn.classList.remove('sel');}
+  else{curMultiSel.push(l);btn.classList.add('sel');}
+}
+
+function checkMulti(stepIdx){
+  if(curMultiSel.length===0)return;
+  const step=curSc.steps[stepIdx];
+  const cor=step.cor;const sel=curMultiSel;
+  document.querySelectorAll(`#choices-${stepIdx} .choice-btn`).forEach(b=>b.disabled=true);
+  document.getElementById('submit-'+stepIdx).disabled=true;
+  document.querySelectorAll(`#choices-${stepIdx} .choice-btn`).forEach(b=>{
+    const l=b.dataset.l;
+    if(cor.includes(l)&&sel.includes(l))b.className='choice-btn correct';
+    else if(!cor.includes(l)&&sel.includes(l))b.className='choice-btn wrong';
+    else if(cor.includes(l))b.className='choice-btn reveal';
+    else b.className='choice-btn';
+  });
+  const allOk=cor.every(c=>sel.includes(c))&&sel.every(s=>cor.includes(s));
+  const partial=cor.some(c=>sel.includes(c))&&sel.every(s=>cor.includes(s));
+  const type=allOk?'correct':partial?'partial':'wrong';
+  if(allOk)curTotalScore++;curMaxScore++;
+  showFeedback(stepIdx,type,step.fb[type]||step.fb.wrong);
+  document.getElementById('next-'+stepIdx).style.display='block';
+  document.getElementById('unsure-'+stepIdx).style.display='block';
+  if(!allOk)addWrongQ(stepIdx,step.title);
+  updateScore();
+}
+
+function selectSingle(btn,stepIdx){
+  if(btn.disabled)return;
+  const step=curSc.steps[stepIdx];
+  const val=btn.dataset.l;
+  document.querySelectorAll(`#choices-${stepIdx} .choice-btn`).forEach(b=>b.disabled=true);
+  const ok=val===step.cor;
+  btn.className='choice-btn '+(ok?'correct':'wrong');
+  if(!ok)document.querySelectorAll(`#choices-${stepIdx} .choice-btn`).forEach(b=>{if(b.dataset.l===step.cor)b.className='choice-btn reveal';});
+  if(ok)curTotalScore++;curMaxScore++;
+  showFeedback(stepIdx,ok?'correct':'wrong',step.fb[ok?'correct':'wrong']);
+  document.getElementById('next-'+stepIdx).style.display='block';
+  document.getElementById('unsure-'+stepIdx).style.display='block';
+  if(!ok)addWrongQ(stepIdx,step.title);
+  updateScore();
+}
+
+function showFeedback(idx,type,text){
+  const fb=document.getElementById('fb-'+idx);
+  fb.className='feedback '+type;
+  const label={correct:'正解！',partial:'部分正解',wrong:'不正解'}[type];
+  fb.innerHTML=`<span class="fb-badge">${label}</span><br>${text}`;
+  fb.style.display='block';
+}
+
+function updateScore(){document.getElementById('header-score').textContent=curTotalScore+'/'+curMaxScore;}
+
+function addWrongQ(stepIdx,title){
+  const key=curSc.id+'_'+stepIdx;
+  if(!appState.wrongQ.some(q=>q.key===key)){
+    appState.wrongQ.push({key,scId:curSc.id,stepIdx,title:curSc.title+'：'+title});
+    saveState(appState);
+  }
+}
+
+function toggleUnsure(stepIdx){
+  const btn=document.getElementById('unsure-'+stepIdx);
+  const key=curSc.id+'_'+stepIdx;
+  const exists=appState.unsureQ.findIndex(q=>q.key===key);
+  const step=curSc.steps[stepIdx];
+  if(exists>-1){
+    appState.unsureQ.splice(exists,1);
+    btn.classList.remove('active');btn.textContent='🤔 自信がなかった問題としてマーク';
+  }else{
+    appState.unsureQ.push({key,scId:curSc.id,stepIdx,title:curSc.title+'：'+step.title});
+    btn.classList.add('active');btn.textContent='✅ 復習セットに追加しました';
+  }
+  saveState(appState);
+}
+
+// ============================================================
+// FINAL
+// ============================================================
+function renderFinal(){
+  const sc=curSc;
+  document.getElementById('progress').style.width='100%';
+  const pct=curMaxScore>0?curTotalScore/curMaxScore:0;
+  const msgs=['解説をもう一度読み直して復習しましょう。「鉄則」の一言一句を繰り返し読むことが大切です。','惜しい判断がありました。鉄則のポイントを確認してください。','良い判断力です！もう少しで完璧です。','完璧です！この理解で現場でも鉄則を実践できます！'];
+  const msgIdx=pct<0.4?0:pct<0.65?1:pct<0.9?2:3;
+  const circ=283.0;const offset=circ-pct*circ;
+  const main=document.getElementById('sim-main');
+  main.innerHTML='';
+  const div=document.createElement('div');
+  div.className='screen active';
+  div.innerHTML=`
+    <div class="final-wrap">
+      <div class="outcome-banner"><div class="outcome-lbl">CHAPTER COMPLETE</div><div class="outcome-txt">${sc.sub}</div></div>
+      <div class="score-ring">
+        <svg viewBox="0 0 100 100"><circle class="score-track" cx="50" cy="50" r="45"/><circle class="score-fill" id="sf" cx="50" cy="50" r="45" stroke-dasharray="${circ}" stroke-dashoffset="${circ}"/></svg>
+        <div class="score-num">${curTotalScore}<span class="score-denom">/${curMaxScore}</span></div>
+      </div>
+      <div class="final-msg">${msgs[msgIdx]}</div>
+      <div style="margin-bottom:16px">
+        <p style="font-size:11px;color:var(--hint);margin-bottom:7px;font-family:'IBM Plex Mono',monospace">AI解説（任意）</p>
+        <textarea id="ai-q" placeholder="この章の鉄則について，より詳しく知りたいことを質問してください（例：qSOFAと血液培養の関係は？ABGの代償計算の方法を教えて）"></textarea>
+        <button class="submit-btn" id="ai-btn" onclick="askAI()">AIに質問する</button>
+        <div class="loading-dots" id="ai-loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span style="margin-left:4px">解説を生成中...</span></div>
+        <div class="ai-resp" id="ai-resp"><div class="card-lbl">AI解説</div><div id="ai-resp-text"></div></div>
+      </div>
+      <div class="action-btns">
+        <button class="btn-primary" onclick="completeAndHome()">完了してホームへ戻る</button>
+        <button class="btn-review" onclick="goReview()">📚 復習セットを見る</button>
+        <button class="btn-secondary" onclick="startScenario('${sc.id}')">もう一度プレイ</button>
+      </div>
+    </div>`;
+  main.appendChild(div);
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>{const el=document.getElementById('sf');if(el)el.style.strokeDashoffset=offset;},300);
+}
+
+function completeAndHome(){
+  if(!appState.completed[curSc.id]){appState.completed[curSc.id]=true;saveState(appState);}
+  renderHome();
+}
+
+async function askAI(){
+  const q=document.getElementById('ai-q').value.trim();
+  if(!q)return;
+  document.getElementById('ai-btn').disabled=true;
+  document.getElementById('ai-loading').classList.add('show');
+  document.getElementById('ai-resp').style.display='none';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:1000,
+        system:'あなたは「内科レジデントの鉄則 第4版」（聖路加国際病院研修医著）をよく知る指導医です。初期研修医からの質問に対して，本書の「鉄則」の内容に沿いながら，実践的で現場で使える具体的な回答をしてください。薬剤量・投与方法・判断の根拠を含めて300〜400字で回答してください。現在取り組んでいる章：' + curSc.title + '（' + curSc.sub + '）',
+        messages:[{role:'user',content:q}]
+      })
+    });
+    const data=await res.json();
+    const text=(data.content||[]).map(i=>i.text||'').join('')||'エラーが発生しました。';
+    document.getElementById('ai-resp-text').textContent=text;
+    document.getElementById('ai-resp').style.display='block';
+  }catch(e){
+    document.getElementById('ai-resp-text').textContent='API接続エラーが発生しました。';
+    document.getElementById('ai-resp').style.display='block';
+  }
+  document.getElementById('ai-loading').classList.remove('show');
+  document.getElementById('ai-btn').disabled=false;
+}
+
+// ============================================================
+// REVIEW
+// ============================================================
+function dedupeReviewItems(items){
+  const seen=new Set();
+  return items.filter(q=>{if(seen.has(q.key))return false;seen.add(q.key);return true;});
+}
+
+function goReview(){
+  const items=dedupeReviewItems([...appState.wrongQ,...appState.unsureQ]);
+  document.getElementById('home').style.display='none';
+  document.getElementById('sim').style.display='none';
+  document.getElementById('review').style.display='block';
+  document.getElementById('header-title').textContent='復習セット';
+  document.getElementById('header-score').textContent=items.length+'問';
+  document.getElementById('progress').style.width='100%';
+  document.getElementById('review-subtitle').textContent=items.length+'問の復習問題があります';
+
+  const main=document.getElementById('review-main');
+  main.innerHTML='';
+
+  if(items.length===0){
+    main.innerHTML=`<div class="empty-review"><div class="emoji">✨</div><p>復習セットに問題がありません。<br>シナリオをプレイして，間違えた問題や<br>自信がなかった問題を追加しましょう。</p></div>
+      <button class="btn-primary" onclick="renderHome()" style="width:100%;margin-top:20px">ホームへ戻る</button>`;
+    return;
+  }
+
+  const backBtn=document.createElement('button');
+  backBtn.className='btn-secondary';
+  backBtn.style.cssText='width:100%;margin-bottom:12px';
+  backBtn.textContent='← ホームへ戻る';
+  backBtn.onclick=renderHome;
+  main.appendChild(backBtn);
+
+  const clearBtn=document.createElement('button');
+  clearBtn.className='btn-secondary';
+  clearBtn.style.cssText='width:100%;margin-bottom:20px;font-size:12px';
+  clearBtn.textContent='🗑 復習セットをすべてクリア';
+  clearBtn.onclick=()=>{if(confirm('復習セットをすべてクリアしますか？')){appState.wrongQ=[];appState.unsureQ=[];saveState(appState);goReview();}};
+  main.appendChild(clearBtn);
+
+  items.forEach((item,i)=>{
+    const sc=SC.find(s=>s.id===item.scId);
+    if(!sc)return;
+    const step=sc.steps[item.stepIdx];
+    if(!step||step.t==='case')return;
+    const isWrong=appState.wrongQ.some(q=>q.key===item.key);
+    const isUnsure=appState.unsureQ.some(q=>q.key===item.key);
+    const card=document.createElement('div');
+    card.className='review-q-card';
+    card.id='review-card-'+item.key;
+    const statusBadges=[];
+    if(isWrong)statusBadges.push('<span class="review-status wrong">不正解</span>');
+    if(isUnsure)statusBadges.push('<span class="review-status unsure">自信なし</span>');
+    card.innerHTML=`
+      <div class="review-q-label">Q${i+1} / ${items.length}</div>
+      <div class="review-q-scenario">${sc.icon} ${sc.title}</div>
+      ${statusBadges.join(' ')}
+      <div class="review-q-title">${step.title}</div>
+      <div class="choices" id="rv-choices-${item.key}">
+        ${step.ch.map(c=>`<button class="choice-btn" data-l="${c.l}" onclick="rvSelect(this,'${item.key}','${step.t}')"><span class="choice-letter">${c.l}</span><span>${c.x}</span></button>`).join('')}
+      </div>
+      ${step.t==='multi'?`<button class="submit-btn" id="rv-submit-${item.key}" onclick="rvCheckMulti('${item.key}')">回答する</button>`:''}
+      <div class="feedback" id="rv-fb-${item.key}"></div>
+      <button class="review-q-clear" onclick="removeFromReview('${item.key}')">✓ この問題を復習セットから削除する</button>`;
+    if(step.t==='multi')card._multiSel=[];
+    main.appendChild(card);
+  });
+
+  const replayBtn=document.createElement('button');
+  replayBtn.className='btn-primary';
+  replayBtn.style.cssText='width:100%;margin-top:20px';
+  replayBtn.textContent='ホームへ戻る';
+  replayBtn.onclick=renderHome;
+  main.appendChild(replayBtn);
+}
+
+function rvSelect(btn,key,type){
+  if(btn.disabled)return;
+  const item=[...appState.wrongQ,...appState.unsureQ].find(q=>q.key===key);
+  if(!item)return;
+  const sc=SC.find(s=>s.id===item.scId);
+  const step=sc.steps[item.stepIdx];
+  if(type==='multi'){
+    const card=document.getElementById('review-card-'+key);
+    if(!card._multiSel)card._multiSel=[];
+    const l=btn.dataset.l;
+    const idx=card._multiSel.indexOf(l);
+    if(idx>-1){card._multiSel.splice(idx,1);btn.classList.remove('sel');}
+    else{card._multiSel.push(l);btn.classList.add('sel');}
+  }else{
+    document.querySelectorAll(`#rv-choices-${key} .choice-btn`).forEach(b=>b.disabled=true);
+    const ok=btn.dataset.l===step.cor;
+    btn.className='choice-btn '+(ok?'correct':'wrong');
+    if(!ok)document.querySelectorAll(`#rv-choices-${key} .choice-btn`).forEach(b=>{if(b.dataset.l===step.cor)b.className='choice-btn reveal';});
+    const fb=document.getElementById('rv-fb-'+key);
+    fb.className='feedback '+(ok?'correct':'wrong');
+    fb.innerHTML=`<span class="fb-badge">${ok?'正解！':'不正解'}</span><br>${step.fb[ok?'correct':'wrong']}`;
+    fb.style.display='block';
+    if(ok)removeFromReviewSilent(key);
+  }
+}
+
+function rvCheckMulti(key){
+  const item=[...appState.wrongQ,...appState.unsureQ].find(q=>q.key===key);
+  if(!item)return;
+  const sc=SC.find(s=>s.id===item.scId);
+  const step=sc.steps[item.stepIdx];
+  const card=document.getElementById('review-card-'+key);
+  const sel=card._multiSel||[];
+  if(sel.length===0)return;
+  document.querySelectorAll(`#rv-choices-${key} .choice-btn`).forEach(b=>b.disabled=true);
+  document.getElementById('rv-submit-'+key).disabled=true;
+  const cor=step.cor;
+  document.querySelectorAll(`#rv-choices-${key} .choice-btn`).forEach(b=>{
+    const l=b.dataset.l;
+    if(cor.includes(l)&&sel.includes(l))b.className='choice-btn correct';
+    else if(!cor.includes(l)&&sel.includes(l))b.className='choice-btn wrong';
+    else if(cor.includes(l))b.className='choice-btn reveal';
+    else b.className='choice-btn';
+  });
+  const allOk=cor.every(c=>sel.includes(c))&&sel.every(s=>cor.includes(s));
+  const partial=cor.some(c=>sel.includes(c))&&sel.every(s=>cor.includes(s));
+  const type=allOk?'correct':partial?'partial':'wrong';
+  const fb=document.getElementById('rv-fb-'+key);
+  fb.className='feedback '+type;
+  const label={correct:'正解！',partial:'部分正解',wrong:'不正解'}[type];
+  fb.innerHTML=`<span class="fb-badge">${label}</span><br>${step.fb[type]||step.fb.wrong}`;
+  fb.style.display='block';
+  if(allOk)removeFromReviewSilent(key);
+}
+
+function removeFromReview(key){
+  removeFromReviewSilent(key);
+  const card=document.getElementById('review-card-'+key);
+  if(card){card.style.opacity='0.4';card.style.pointerEvents='none';}
+  document.getElementById('header-score').textContent=dedupeReviewItems([...appState.wrongQ,...appState.unsureQ]).length+'問';
+}
+
+function removeFromReviewSilent(key){
+  appState.wrongQ=appState.wrongQ.filter(q=>q.key!==key);
+  appState.unsureQ=appState.unsureQ.filter(q=>q.key!==key);
+  saveState(appState);
+}
+
+renderHome();
+</script>
+</body>
+</html>
